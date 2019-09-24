@@ -1,0 +1,125 @@
+.navbar-custom {
+    background-color:#2b50c0;
+    color:#ffffff;
+    border-radius:0;
+}
+.navbar-custom .navbar-brand {
+    color: #ecf0f1;
+}
+.jumbotron {
+    background-color: #fff;
+}
+.icon-bar {
+    background-color: white;
+}
+.social-img {
+    width: 200px;
+    height:200px;
+}
+.social-img-profile {
+    width: 200px;
+    height:200px;
+    float: left;
+}
+.sidebar-header {
+    text-align: center;
+    margin-top: 20px;
+}
+.panel{
+    margin-left: 1px;
+    margin-right: 1px;
+    width:100%;
+}
+.panel-right {
+    float: right;
+    width: 70%;
+}
+.profile-block::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.margin-top {
+    margin-top: 20px;
+}
+.friends-top {
+    margin-top: 30px;
+}
+.profile-friend {
+    margin-right:10px;
+}
+.image-upload {
+    width: 200px;
+    height: 200px;
+}
+.image-drop {
+    width: 208px;
+    height: 208px;
+    float: left;
+    text-align: center;
+    line-height: 208px;
+}
+.btn-vertical {
+    padding-top: 70px;
+    float: left;
+}
+.btn-left {
+    margin-left: 70px;
+}
+.border-dotted {
+    border: 1px dotted black;
+}
+.border-dotted-big {
+    border: 2px dotted black;
+}
+.drop-text {
+    font-size: 18px;
+}
+.message-left {
+    float: left;
+    margin-right:10px;
+}
+.img-message {
+    width: 50px;
+    height:50px;
+    margin-right: 5px;
+}
+.image-right {
+    float: right;
+}
+.image-left {
+    float: left;
+    margin-right: 10px;
+    text-align: center;
+}
+.stylish-input-group .input-group-addon{
+    background:transparent;
+}
+.stylish-input-group .form-control{
+    border-right:0;
+    box-shadow:0 0 0;
+    border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+.table > tbody > tr > td {
+    border: none;
+}
+.friends > tbody > tr > td {
+    width: 25%;
+    vertical-align: middle;
+}
+.profile-info {
+    width: 70%;
+}
+.users {
+    width: 60%;
+}
+.users > tbody > tr > td {
+    vertical-align: middle;
+}
+.lang.langSelected {
+    color: lightgreen;
+}

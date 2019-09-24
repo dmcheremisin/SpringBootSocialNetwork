@@ -2,9 +2,11 @@ package info.cheremisin.social.network.bootstrap;
 
 import info.cheremisin.social.network.entities.Friendship;
 import info.cheremisin.social.network.entities.Message;
+import info.cheremisin.social.network.entities.Role;
 import info.cheremisin.social.network.entities.User;
 import info.cheremisin.social.network.repositories.FriendshipRepository;
 import info.cheremisin.social.network.repositories.MessageRepository;
+import info.cheremisin.social.network.repositories.RoleRepository;
 import info.cheremisin.social.network.repositories.UserRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -18,13 +20,14 @@ public class BootstrapDb implements ApplicationListener<ContextRefreshedEvent> {
     private final UserRepository userRepository;
     private final MessageRepository messageRepository;
     private final FriendshipRepository friendshipRepository;
+    private final RoleRepository roleRepository;
 
-    public BootstrapDb(UserRepository userRepository,
-                       MessageRepository messageRepository,
-                       FriendshipRepository friendshipRepository) {
+    public BootstrapDb(UserRepository userRepository, MessageRepository messageRepository,
+                       FriendshipRepository friendshipRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.messageRepository = messageRepository;
         this.friendshipRepository = friendshipRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -49,6 +52,15 @@ public class BootstrapDb implements ApplicationListener<ContextRefreshedEvent> {
         friendship.setUserReceiver(user);
 
         friendshipRepository.save(friendship);
+
+        Role admin = new Role();
+        admin.setName("ADMIN");
+        Role userRole = new Role();
+        userRole.setName("USER");
+
+        roleRepository.save(admin);
+        roleRepository.save(userRole);
+
     }
 
 }

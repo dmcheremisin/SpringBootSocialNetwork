@@ -1,10 +1,14 @@
 package info.cheremisin.social.network.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
@@ -17,7 +21,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(name = "username")
     private String email;
@@ -46,17 +50,18 @@ public class User {
     @Column(name = "image")
     private String image;
 
-//    @OneToMany
-//    private List<Friendship> friendships = new ArrayList<>();
-//
-//    @OneToMany
-//    private List<Message> messages = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "role_user",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<Role> roles = new ArrayList<>();
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -132,19 +137,11 @@ public class User {
         this.image = image;
     }
 
-//    public List<Friendship> getFriendships() {
-//        return friendships;
-//    }
-//
-//    public void setFriendships(List<Friendship> friendships) {
-//        this.friendships = friendships;
-//    }
-//
-//    public List<Message> getMessages() {
-//        return messages;
-//    }
-//
-//    public void setMessages(List<Message> messages) {
-//        this.messages = messages;
-//    }
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 }
