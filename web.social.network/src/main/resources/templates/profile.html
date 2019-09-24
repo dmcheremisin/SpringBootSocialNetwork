@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Profile</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}"/>
+
+</head>
+<body>
+<div class="navbar navbar-custom  navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="./">Social Network</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <div class="navbar-right">
+                <a href="#" class="navbar-brand">Ru</a>
+                <a href="#" class="navbar-brand">En</a>
+                <a href="#" class="navbar-brand">
+                    <form th:action="@{/logout}" method="POST" >
+                        <input type="submit" value="Logout" />
+                    </form>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="sidebar-header"></div>
+
+            <div class="panel panel-default ">
+                <div class="panel-heading">
+                    <h3 class="panel-title">User menu</h3>
+                </div>
+                <div class="list-group">
+                    <a href="./profile.html" class="list-group-item">Profile</a>
+                    <a href="./messages.html" class="list-group-item">Messages</a>
+                    <a href="./friends.html" class="list-group-item">Friends</a>
+                    <a href="./users.html" class="list-group-item">Users</a>
+                    <a href="./settings.html" class="list-group-item">Settings</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+
+            <div class="profile-block margin-top">
+                <table class="table">
+                    <tr>
+                        <td>
+                            <div class="card">
+                                <img class="img-circle img-thumbnail social-img" src="./img/1.jpg" alt="Your profile image">
+                                <h3>Tyrion Lanister</h3>
+                            </div>
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <form method="post" action="/friends">
+                                            <button class="btn btn-info" type="submit" >Send message</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td class="profile-info">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3>Profile Info</h3>
+                                </div>
+                                <div class="list-group">
+                                    <p class="list-group-item">First name: Tyron</p>
+                                    <p class="list-group-item">Last name: Lanister</p>
+                                    <p class="list-group-item">Birth date: 11.01.1989</p>
+                                    <p class="list-group-item">Gender: Male</p>
+                                    <p class="list-group-item">Phone: +7 999 999 99 99</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Admin menu</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="message-left">
+                                        <form method="post" action="/conversation">
+                                            <input type="hidden" name="userId" value="${profileUser.id}">
+                                            <input type="hidden" name="action" value="unblock">
+                                            <button class="btn btn-success" name="companion" value="${profileUser.id}"
+                                                    type="submit">Make Admin
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="message-left">
+                                        <form method="post" action="/conversation">
+                                            <input type="hidden" name="userId" value="${profileUser.id}">
+                                            <input type="hidden" name="action" value="unblock">
+                                            <button class="btn btn-danger" name="companion" value="${profileUser.id}"
+                                                    type="submit">Block user
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="profile-block">
+                <h3>Recent Message:</h3>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="card">
+                            <a href="#"><img class="img-circle img-thumbnail img-message" src="./img/1.jpg" /> Tyrion</a>&nbsp; to &nbsp;
+                            <a href="#"><img class="img-circle img-thumbnail img-message" src="./img/2.png" /> Cersei</a>
+                        </div>
+                    </div>
+                    <div class="panel-body"><a href="conversation.html">Hello! How are you?</a></div>
+                </div>
+            </div>
+            <div class="profile-block">
+                <h3>Your friends:</h3>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <a class="profile-friend" href="profile.html"><img class="img-circle img-thumbnail img-message" src="./img/2.png" />Cersei</a>
+                        <a class="profile-friend" href="profile.html"><img class="img-circle img-thumbnail img-message" src="./img/3.jpeg"/>Jaime</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <footer>
+        <p>&copy; Все права защищены</p>
+    </footer>
+</div>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/profile.js"></script>
+</body>
+</html>
