@@ -19,7 +19,7 @@
                         <td>
                             <div class="card">
                                 <img class="img-circle img-thumbnail social-img" src="./img/1.jpg" alt="Your profile image">
-                                <h3>Tyrion Lanister</h3>
+                                <h3 th:text="${user.firstName + ' ' + user.lastName}">Tyrion Lanister</h3>
                             </div>
                             <table class="table">
                                 <tr>
@@ -37,11 +37,11 @@
                                     <h3>Profile Info</h3>
                                 </div>
                                 <div class="list-group">
-                                    <p class="list-group-item">First name: Tyron</p>
-                                    <p class="list-group-item">Last name: Lanister</p>
-                                    <p class="list-group-item">Birth date: 11.01.1989</p>
-                                    <p class="list-group-item">Gender: Male</p>
-                                    <p class="list-group-item">Phone: +7 999 999 99 99</p>
+                                    <p class="list-group-item">First name: <span th:text="${user.firstName}">Tyron</span></p>
+                                    <p class="list-group-item">Last name: <span th:text="${user.lastName}">Lanister</span></p>
+                                    <p class="list-group-item">Birth date: <span th:text="${user.dob}">11.01.1989</span></p>
+                                    <p class="list-group-item">Gender: <span th:text="${user.sex}">Male</span></p>
+                                    <p class="list-group-item">Phone: <span th:text="${user.phone}">+7 999 999 99 99</span></p>
                                 </div>
                             </div>
                         </td>
