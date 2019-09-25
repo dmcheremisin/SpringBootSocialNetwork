@@ -1,61 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Profile</title>
+<head th:replace="template.html :: header"></head>
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}"/>
-
-</head>
 <body>
-<div class="navbar navbar-custom  navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="./">Social Network</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <div class="navbar-right">
-                <a href="#" class="navbar-brand">Ru</a>
-                <a href="#" class="navbar-brand">En</a>
-                <a href="#" class="navbar-brand">
-                    <form th:action="@{/logout}" method="POST" >
-                        <input type="submit" value="Logout" />
-                    </form>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
+<div th:replace="template.html :: navbar" ></div>
 <hr/>
+
 <div class="container">
     <div class="row">
-        <div class="col-md-3">
-            <div class="sidebar-header"></div>
+        <div th:replace="template.html :: menu" ></div>
 
-            <div class="panel panel-default ">
-                <div class="panel-heading">
-                    <h3 class="panel-title">User menu</h3>
-                </div>
-                <div class="list-group">
-                    <a href="./profile.html" class="list-group-item">Profile</a>
-                    <a href="./messages.html" class="list-group-item">Messages</a>
-                    <a href="./friends.html" class="list-group-item">Friends</a>
-                    <a href="./users.html" class="list-group-item">Users</a>
-                    <a href="./settings.html" class="list-group-item">Settings</a>
-                </div>
-            </div>
-        </div>
         <div class="col-md-9">
 
             <div class="profile-block margin-top">
@@ -147,14 +102,9 @@
         </div>
     </div>
     <hr/>
-    <footer>
-        <p>&copy; Все права защищены</p>
-    </footer>
 </div>
 
+<div th:replace="template.html :: footer"></div>
 
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/profile.js"></script>
 </body>
 </html>
