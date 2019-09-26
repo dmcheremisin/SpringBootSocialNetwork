@@ -1,6 +1,6 @@
 package info.cheremisin.social.network.config;
 
-import info.cheremisin.social.network.service.UserService;
+import info.cheremisin.social.network.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// add a reference to our security data source
 	@Autowired
-	private UserService userService;
+	private UserServiceImpl userService;
 	
     @Autowired
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
@@ -32,6 +32,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 			.antMatchers("/").anonymous()
+			.antMatchers("/register").anonymous()
 			.antMatchers("/*").hasRole("USER")
 			.antMatchers("/admin/*").hasRole("ADMIN")
 			.and()

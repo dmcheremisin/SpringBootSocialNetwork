@@ -15,16 +15,16 @@
         <div class="col-md-4">
             <h1>Register today!</h1>
             <div class="form-group">
-                <form action="/register" method="post" id="register">
+                <form th:action="@{/register}" th:object="${user}" method="POST" id="register">
                     <div class="form-group">
                         <label for="register_email">
-                            Email: <input type="email" name="register_email" class="form-control register_email" id="register_email" required/>
+                            Email: <input type="email" th:field="*{email}" name="register_email" class="form-control register_email" id="register_email" required/>
                         </label>
                         <div class="help-block register_email_error hidden">Please, provide valid email</div>
                     </div>
                     <div class="form-group">
                         <label for="register_password">
-                            Password: <input type="password" name="register_password" class="form-control register_password" id="register_password" required/>
+                            Password: <input type="password" th:field="*{password}" name="register_password" class="form-control register_password" id="register_password" required/>
                         </label>
                         <div class="help-block register_password_error hidden">Please, use all characters: letters and numbers at least once, minimum 6 symbols</div>
                     </div>
