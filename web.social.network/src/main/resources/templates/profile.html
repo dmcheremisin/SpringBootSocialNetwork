@@ -40,7 +40,7 @@
                                 <div class="list-group">
                                     <p class="list-group-item">First name: <span th:text="${user.firstName}">Tyron</span></p>
                                     <p class="list-group-item">Last name: <span th:text="${user.lastName}">Lanister</span></p>
-                                    <p class="list-group-item">Birth date: <span th:text="${user.dob}">11.01.1989</span></p>
+                                    <p class="list-group-item">Birth date: <span th:text="${#temporals.format(user.dob, 'dd.MM.yyyy')}">11.01.1989</span></p>
                                     <p class="list-group-item">Gender: <span th:text="${user.sex}">Male</span></p>
                                     <p class="list-group-item">Phone: <span th:text="${user.phone}">+7 999 999 99 99</span></p>
                                 </div>
