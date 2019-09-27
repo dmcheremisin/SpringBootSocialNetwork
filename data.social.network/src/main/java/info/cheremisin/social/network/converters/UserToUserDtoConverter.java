@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Component
 public class UserToUserDtoConverter implements Converter<User, UserDTO> {
-    public static final SimpleDateFormat SHORT_DT = new SimpleDateFormat("dd.MM.yyyy");
+    private static final ThreadLocal<SimpleDateFormat> SHORT_DT = ThreadLocal.withInitial(() -> new SimpleDateFormat("dd.MM.yyyy"));
 
     @Override
     public UserDTO convert(User user) {
@@ -29,12 +29,12 @@ public class UserToUserDtoConverter implements Converter<User, UserDTO> {
 
         Date dob = user.getDob();
         if(dob != null){
-            String dateString = SHORT_DT.format(dob);
+            String dateString = SHORT_DT.get().format(dob);
             userDTO.setDob(dateString);
         }
 
         userDTO.setBlocked(user.getBlocked());
         userDTO.setImage(user.getImage());
-        return null;
+        return userDTO;
     }
 }

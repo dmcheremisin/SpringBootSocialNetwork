@@ -3,7 +3,8 @@
 
 <head th:replace="template.html :: header('Your profile')"></head>
 
-<body>
+<body th:with="user=${session.user}">
+
 <div th:replace="template.html :: navbar" ></div>
 <hr/>
 

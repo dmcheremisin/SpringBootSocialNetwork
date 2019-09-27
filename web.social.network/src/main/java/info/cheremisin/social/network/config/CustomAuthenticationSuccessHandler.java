@@ -1,7 +1,7 @@
 package info.cheremisin.social.network.config;
 
-import info.cheremisin.social.network.entities.User;
-import info.cheremisin.social.network.repositories.UserRepository;
+import info.cheremisin.social.network.dto.UserDTO;
+import info.cheremisin.social.network.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -16,12 +16,11 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-			throws IOException, ServletException {
+			throws IOException {
 
 		System.out.println("\n\nIn customAuthenticationSuccessHandler\n\n");
 
@@ -29,15 +28,19 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		
 		System.out.println("userName=" + userName);
 
-		User theUser = userRepository.findUserByEmail(userName);
+		UserDTO userDTO = userService.getUserByEmail(userName);
 		
 		// now place in the session
 		HttpSession session = request.getSession();
-		session.setAttribute("user", theUser);
+		session.setAttribute("user", userDTO);
 		
 		// forward to home page
 		
 		response.sendRedirect(request.getContextPath() + "/profile");
 	}
 
+	@Autowired
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 }

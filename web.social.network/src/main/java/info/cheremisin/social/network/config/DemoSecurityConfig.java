@@ -1,7 +1,6 @@
 package info.cheremisin.social.network.config;
 
-import info.cheremisin.social.network.service.impl.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import info.cheremisin.social.network.service.impl.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -16,13 +15,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// add a reference to our security data source
-	@Autowired
-	private UserServiceImpl userService;
-	
-    @Autowired
+	private UserDetailsServiceImpl userDetailsService;
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
-    
-   @Override
+
+	public DemoSecurityConfig(UserDetailsServiceImpl userDetailsService,
+							  CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
+		this.userDetailsService = userDetailsService;
+		this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+	}
+
+	@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
@@ -61,11 +63,11 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-		auth.setUserDetailsService(userService); //set the custom user details service
+		auth.setUserDetailsService(userDetailsService); //set the custom user details service
 		auth.setPasswordEncoder(passwordEncoder()); //set the password encoder - bcrypt
 		return auth;
 	}
-	  
+
 }
 
 

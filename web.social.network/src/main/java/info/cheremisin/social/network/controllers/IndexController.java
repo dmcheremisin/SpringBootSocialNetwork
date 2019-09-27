@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static info.cheremisin.social.network.common.Utils.getUserFromRequest;
-
 @Controller
 public class IndexController {
 
@@ -23,7 +21,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String indexPage(HttpServletRequest request, Model model) {
-        if(getUserFromRequest(request) != null) {
+        if(request.getSession().getAttribute("user") != null) {
             return "profile";
         }
         model.addAttribute("user", new UserDTO());

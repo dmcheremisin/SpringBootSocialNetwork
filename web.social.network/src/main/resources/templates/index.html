@@ -17,6 +17,18 @@
             <div class="form-group">
                 <form th:action="@{/register}" th:object="${user}" method="POST" id="register">
                     <div class="form-group">
+                        <label for="register_firstName">
+                            First name: <input type="text" th:field="*{firstName}" name="register_firstName" class="form-control" id="register_firstName" required/>
+                        </label>
+                        <div class="help-block register_firstName_error hidden">Please, provide valid first name</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="register_lastName">
+                            Last name: <input type="text" th:field="*{lastName}" name="register_lastName" class="form-control" id="register_lastName" required/>
+                        </label>
+                        <div class="help-block register_lastName_error hidden">Please, provide valid last name</div>
+                    </div>
+                    <div class="form-group">
                         <label for="register_email">
                             Email: <input type="email" th:field="*{email}" name="register_email" class="form-control register_email" id="register_email" required/>
                         </label>

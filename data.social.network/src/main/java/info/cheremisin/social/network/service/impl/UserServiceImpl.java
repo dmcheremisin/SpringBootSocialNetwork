@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import static info.cheremisin.social.network.constants.Constants.ROLE_USER;
 
 @Service
-public class UserServiceImpl implements UserDetailsService, UserService {
+public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private UserToUserDtoConverter userToUserDtoConverter;
@@ -35,19 +35,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         this.userToUserDtoConverter = userToUserDtoConverter;
         this.userDtoToUserConverter = userDtoToUserConverter;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findUserByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-                mapRolesToAuthorities(user.getRoles()));
-    }
-
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
     @Override

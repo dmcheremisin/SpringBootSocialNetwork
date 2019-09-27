@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Component
 public class UserDtoToUserConverter implements Converter<UserDTO, User> {
-    public static final SimpleDateFormat SHORT_DT = new SimpleDateFormat("dd.MM.yyyy");
+    private static final ThreadLocal<SimpleDateFormat> SHORT_DT = ThreadLocal.withInitial(() -> new SimpleDateFormat("dd.MM.yyyy"));
 
     @Override
     public User convert(UserDTO userDTO) {
@@ -29,7 +29,7 @@ public class UserDtoToUserConverter implements Converter<UserDTO, User> {
         user.setSex(Gender.getGenderByName(userDTO.getSex()));
 
         try {
-            Date date = SHORT_DT.parse(userDTO.getDob());
+            Date date = SHORT_DT.get().parse(userDTO.getDob());
             user.setDob(date);
         } catch (Exception e) {
             e.printStackTrace();
