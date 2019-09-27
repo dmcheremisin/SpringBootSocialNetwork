@@ -6,8 +6,6 @@ import info.cheremisin.social.network.entities.User;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-
 @Component
 public class UserDtoToUserConverter implements Converter<UserDTO, User> {
 
@@ -27,7 +25,6 @@ public class UserDtoToUserConverter implements Converter<UserDTO, User> {
                 .blocked(userDTO.getBlocked())
                 .image(userDTO.getImage())
                 .dob(userDTO.getDob())
-                .roles(new ArrayList<>())
                 .build();
     }
 }

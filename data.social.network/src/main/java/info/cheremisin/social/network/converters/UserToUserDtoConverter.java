@@ -6,8 +6,6 @@ import info.cheremisin.social.network.entities.User;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
-
 @Component
 public class UserToUserDtoConverter implements Converter<User, UserDTO> {
 

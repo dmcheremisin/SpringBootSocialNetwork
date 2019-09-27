@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -51,6 +52,9 @@ public class UserServiceImpl implements UserService {
 
         Role role = new Role();
         role.setName(ROLE_USER);
+        if(user.getRoles() == null) {
+            user.setRoles(new ArrayList<>());
+        }
         user.getRoles().add(role);
 
         userRepository.save(user);
