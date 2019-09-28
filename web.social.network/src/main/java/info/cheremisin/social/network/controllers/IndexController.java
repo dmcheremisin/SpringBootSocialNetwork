@@ -4,11 +4,13 @@ import info.cheremisin.social.network.dto.UserDTO;
 import info.cheremisin.social.network.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 public class IndexController {
@@ -29,7 +31,18 @@ public class IndexController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") UserDTO userDTO) {
+    public String registerUser(@Valid @ModelAttribute("user") UserDTO userDTO, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            return "index";
+        }
+
+        String email = userDTO.getEmail();
+        UserDTO userByEmail = userService.getUserByEmail(email);
+        if(userByEmail != null) {
+            model.addAttribute("registrationError", String.format("User with email = %s already exists", email));
+            model.addAttribute("user", new UserDTO());
+            return "index";
+        }
         userService.saveUser(userDTO);
         return "registration-confirmation";
     }
