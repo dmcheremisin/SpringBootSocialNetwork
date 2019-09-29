@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="template.html :: header('Your profile')"></head>
+
+<body th:with="user=${session.user}">
+
+<div th:replace="template.html :: navbar" ></div>
+<hr/>
+
+<div class="container">
+    <div class="row">
+        <div th:replace="template.html :: menu" ></div>
+
+        <div class="col-md-9">
+            <h2>Your avatar.</h2>
+            <div class="profile-block">
+                <div>
+                    <div class="image-drop border-dotted" ondrop="dragAndDrop(event)" ondragover="dragEnter(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
+                        <p class="drop-text">Drop your image here.</p>
+                    </div>
+                    <div class="btn-vertical">
+                        <button class="btn btn-lg btn-success btn-left">Update avatar</button>
+                    </div>
+                    <div class="image-right">
+                        <div class="card">
+                            <img class="img-circle img-thumbnail social-img" src="./img/1.jpg" alt="Your profile image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-block">
+                <h2>Your profile.</h2>
+                <form action="/changeProfile" method="post">
+                    <div class="panel panel-default">
+                        <div class="list-group">
+
+                            <div class="list-group-item">
+                                <label for="email">Email: <input type="text" name="email" class="form-control"
+                                                                 id="email" disabled/></label>
+                            </div>
+                            <div class="list-group-item">
+                                <label for="firstname">First name: <input type="text" name="firstname"
+                                                                          class="form-control"
+                                                                          id="firstname"/></label>
+                            </div>
+                            <div class="list-group-item">
+                                <label for="lastname">Last name: <input type="text" name="lastname" class="form-control"
+                                                                        id="lastname"/></label>
+                            </div>
+                            <div class="list-group-item">
+                                <label for="dob">Birth date: <input type="date" name="dob" class="form-control"
+                                                                    id="dob"/></label>
+                            </div>
+                            <div class="list-group-item"> Gender:
+                                <label class="radio-inline"><input type="radio" name="sex" value="1">Male</label>
+                                <label class="radio-inline"><input type="radio" name="sex" value="2">Female</label>
+                            </div>
+                            <div class="list-group-item">
+                                <label for="phone">Phone: <input type="text" name="phone" class="form-control"
+                                                                 id="phone"/></label>
+                            </div>
+                            <div class="list-group-item">
+                                <label for="datepicker">Birth date:
+                                    <input type="text" id="datepicker" size="30" class="form-control">
+                                </label>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-success">Change profile</button>
+                </form>
+            </div>
+            <div class="profile-block">
+                <h2>Change password</h2>
+                <form action="/changePassword" method="post">
+                    <div class="panel panel-default">
+                        <div class="list-group">
+
+                            <div class="list-group-item">
+                                <label for="oldpassword">Old Password: <input type="password" name="oldpassword"
+                                                                              class="form-control"
+                                                                              id="oldpassword"/></label>
+                            </div>
+                            <div class="list-group-item">
+                                <label for="newpassword">New Password: <input type="password" name="newpassword"
+                                                                              class="form-control"
+                                                                              id="newpassword"/></label>
+                            </div>
+                            <div class="list-group-item">
+                                <label for="repeatpassword">Repeat Password: <input type="password"
+                                                                                    name="repeatpassword"
+                                                                                    class="form-control"
+                                                                                    id="repeatpassword"/></label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-success">Change password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="template.html :: footer"></div>
+
+<script src="../static/js/jquery-ui.min.js" th:src="@{/js/jquery-ui.min.js}"></script>
+<script src="../static/js/profile.js" th:src="@{/js/profile.js}"></script>
+<script>
+    $( function() {
+        $.datepicker.regional['ru'] = {
+            closeText: 'Закрыть',
+            prevText: 'Пред',
+            nextText: 'След',
+            currentText: 'Сегодня',
+            monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь',
+                'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+            monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн',
+                'Июл','Авг','Сен','Окт','Ноя','Дек'],
+            dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
+            dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
+            dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
+            weekHeader: 'Нед',
+            dateFormat: 'dd.mm.yy',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',};
+        $.datepicker.setDefaults($.datepicker.regional['ru']);
+        var options = {
+                changeMonth: true,
+                changeYear: true,
+                highlightWeek: true,
+                yearRange: "-100:+0"
+            };
+        $( "#datepicker" ).datepicker(options);
+    } );
+</script>
+
+</body>
+</html>
