@@ -24,7 +24,7 @@ public class IndexController {
     @GetMapping("/")
     public String indexPage(HttpServletRequest request, Model model) {
         if(request.getSession().getAttribute("user") != null) {
-            return "profile";
+            return "user/profile";
         }
         model.addAttribute("user", new UserDTO());
         return "index";
