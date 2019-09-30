@@ -3,7 +3,7 @@
 
 <head th:replace="template.html :: header('Your profile')"></head>
 
-<body>
+<body th:with="user=${session.user}">
 
 <div th:replace="template.html :: navbar" ></div>
 <hr/>
@@ -36,19 +36,19 @@
                         <div class="list-group">
                             <div class="list-group-item">
                                 <label for="email">Email: <input type="text" name="email" class="form-control"
-                                                                 th:field="*{email}"
+                                                                 th:value="${user.email}"
                                                                  id="email" readonly />
                                 </label>
                             </div>
                             <div class="list-group-item">
                                 <label for="firstName">First name: <input type="text" name="firstName" class="form-control"
-                                                                          th:field="*{firstName}"
+                                                                          th:value="${user.firstName}"
                                                                           id="firstName"/>
                                 </label>
                             </div>
                             <div class="list-group-item">
                                 <label for="lastName">Last name: <input type="text" name="lastName" class="form-control"
-                                                                        th:field="*{lastName}"
+                                                                        th:value="${user.lastName}"
                                                                         id="lastName"/>
                                 </label>
                             </div>
@@ -61,45 +61,67 @@
                             </div>
                             <div class="list-group-item"> Gender:
                                 <label class="radio-inline">
-                                    <input type="radio" th:field="*{sex}" value="Male" th:checked="${user.sex.equals('Male')}">Male
+                                    <input type="radio" name="sex" value="Male" th:checked="${user.sex.equals('Male')}">Male
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" th:field="*{sex}" value="Female" th:checked="${user.sex.equals('Female')}">Female
+                                    <input type="radio" name="sex"  value="Female" th:checked="${user.sex.equals('Female')}">Female
                                 </label>
                             </div>
                             <div class="list-group-item">
                                 <label for="phone">Phone: <input type="text" name="phone" class="form-control"
-                                                                 th:field="*{phone}"
+                                                                 th:value="${user.phone}"
                                                                  id="phone"/>
                                 </label>
                             </div>
                         </div>
-                        <input type="hidden" th:field="*{id}" />
+                        <input type="hidden" name="id" th:value="${user.id}" />
                     </div>
                     <button type="submit" class="btn btn-lg btn-success">Change profile</button>
                 </form>
             </div>
             <div class="profile-block">
                 <h2>Change password</h2>
-                <form action="/changePassword" method="post">
+                <form th:action="@{/user/updatePassword}" th:object="${passwordChangeDTO}" action="/user/updatePassword" method="POST">
                     <div class="panel panel-default">
                         <div class="list-group">
-
                             <div class="list-group-item">
-                                <label for="oldpassword">Old Password: <input type="password" name="oldpassword"
+                                <label for="oldPassword">Old Password: <input type="password"
+                                                                              name="oldPassword"
                                                                               class="form-control"
-                                                                              id="oldpassword"/></label>
+                                                                              id="oldPassword"/>
+                                </label>
+                                <div th:if="${passwordError}" style="margin-bottom: 10px" class="text-danger">
+                                    <p>You entered wrong old password</p>
+                                </div>
+                                <div th:if="${#fields.hasErrors('oldPassword')}" style="margin-bottom: 10px" class="text-danger">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('oldPassword')}" th:text="'Old password: ' + ${err}" />
+                                    </ul>
+                                </div>
                             </div>
                             <div class="list-group-item">
-                                <label for="newpassword">New Password: <input type="password" name="newpassword"
-                                                                              class="form-control"
-                                                                              id="newpassword"/></label>
+                                <label for="password">New Password: <input type="password"
+                                                                           name="password"
+                                                                           class="form-control"
+                                                                           id="password"/>
+                                </label>
+                                <div th:if="${#fields.hasErrors('password')}" style="margin-bottom: 10px" class="text-danger">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('password')}" th:text="'Password: ' + ${err}" />
+                                    </ul>
+                                </div>
                             </div>
                             <div class="list-group-item">
-                                <label for="repeatpassword">Repeat Password: <input type="password"
-                                                                                    name="repeatpassword"
+                                <label for="passwordConfirmation">Repeat Password: <input type="password"
+                                                                                    name="passwordConfirmation"
                                                                                     class="form-control"
-                                                                                    id="repeatpassword"/></label>
+                                                                                    id="passwordConfirmation"/>
+                                </label>
+                                <div th:if="${#fields.hasErrors('passwordConfirmation')}" style="margin-bottom: 10px" class="text-danger">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('passwordConfirmation')}" th:text="'Password confirmation: ' + ${err}" />
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

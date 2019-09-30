@@ -23,7 +23,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="./">Social Network</a>
+            <a class="navbar-brand" th:href="@{/}" >Social Network</a>
         </div>
         <div class="navbar-collapse collapse">
             <form th:if="${session.user == null}" action="#" th:action="@{/authenticateUser}" method="POST" class="navbar-form navbar-right">
@@ -73,11 +73,11 @@
                     <h3 class="panel-title">User menu</h3>
                 </div>
                 <div class="list-group">
-                    <a href="./profile" class="list-group-item">Profile</a>
-                    <a href="./messages" class="list-group-item">Messages</a>
-                    <a href="./friends" class="list-group-item">Friends</a>
-                    <a href="./users" class="list-group-item">Users</a>
-                    <a href="./settings" class="list-group-item">Settings</a>
+                    <a th:href="@{/user/profile}" class="list-group-item">Profile</a>
+                    <a th:href="@{/user/messages}" class="list-group-item">Messages</a>
+                    <a th:href="@{/user/friends}" class="list-group-item">Friends</a>
+                    <a th:href="@{/user/users}" class="list-group-item">Users</a>
+                    <a th:href="@{/user/settings}" class="list-group-item">Settings</a>
                 </div>
             </div>
         </div>

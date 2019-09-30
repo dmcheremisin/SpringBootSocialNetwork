@@ -8,6 +8,8 @@ public interface UserService {
 
     void createUser(UserDTO userDTO);
 
+    void updatePassword(String password, Long id);
+
     void updateUser(UserDTO userDTO);
 
 }

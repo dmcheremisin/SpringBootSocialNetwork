@@ -18,4 +18,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
     int updateUserSettings(@Param("firstName") String firstName, @Param("lastName") String lastName,
                    @Param("dob") LocalDate dob, @Param("sex") Integer sex, @Param("phone") String phone,
                    @Param("id") Long id);
+
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE User u SET u.password = :password WHERE u.id = :id")
+    int updatePassword(@Param("password") String password, @Param("id") Long id);
 }

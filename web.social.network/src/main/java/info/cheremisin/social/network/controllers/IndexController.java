@@ -24,7 +24,7 @@ public class IndexController {
     @GetMapping("/")
     public String indexPage(HttpServletRequest request, Model model) {
         if(request.getSession().getAttribute("user") != null) {
-            return "user/profile";
+            return "profile";
         }
         model.addAttribute("user", new UserDTO());
         return "index";
@@ -44,7 +44,7 @@ public class IndexController {
         String email = userDTO.getEmail();
         UserDTO userByEmail = userService.getUserByEmail(email);
         if(userByEmail != null) {
-            model.addAttribute("registrationError", String.format("User with email = %s already exists", email));
+            model.addAttribute("registrationError", true);
             model.addAttribute("user", new UserDTO());
             return "index";
         }

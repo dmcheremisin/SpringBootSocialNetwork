@@ -6,6 +6,7 @@ import info.cheremisin.social.network.converters.UserToUserDtoConverter;
 import info.cheremisin.social.network.dto.UserDTO;
 import info.cheremisin.social.network.entities.Role;
 import info.cheremisin.social.network.entities.User;
+import info.cheremisin.social.network.repositories.RoleRepository;
 import info.cheremisin.social.network.repositories.UserRepository;
 import info.cheremisin.social.network.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +21,7 @@ import static info.cheremisin.social.network.constants.Constants.ROLE_USER;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private RoleRepository roleRepository;
     private UserToUserDtoConverter userToUserDtoConverter;
     private UserDtoToUserConverter userDtoToUserConverter;
     private BCryptPasswordEncoder passwordEncoder;
@@ -27,6 +29,7 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserRepository userRepository, UserToUserDtoConverter userToUserDtoConverter,
                            UserDtoToUserConverter userDtoToUserConverter, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.userToUserDtoConverter = userToUserDtoConverter;
         this.userDtoToUserConverter = userDtoToUserConverter;
         this.passwordEncoder = passwordEncoder;
@@ -42,16 +45,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUser(UserDTO userDTO) {
         User user = userDtoToUserConverter.convert(userDTO);
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
-        Role role = new Role();
-        role.setName(ROLE_USER);
         if(user.getRoles() == null) {
             user.setRoles(new ArrayList<>());
         }
+        Role role = roleRepository.getRoleByName(ROLE_USER);
         user.getRoles().add(role);
 
         userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void updatePassword(String password, Long id) {
+        String encodedPassword = passwordEncoder.encode(password);
+        userRepository.updatePassword(encodedPassword, id);
     }
 
     @Override
