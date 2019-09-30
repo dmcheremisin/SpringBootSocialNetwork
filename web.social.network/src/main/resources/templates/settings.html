@@ -3,7 +3,7 @@
 
 <head th:replace="template.html :: header('Your profile')"></head>
 
-<body th:with="user=${session.user}">
+<body>
 
 <div th:replace="template.html :: navbar" ></div>
 <hr/>
@@ -24,50 +24,57 @@
                     </div>
                     <div class="image-right">
                         <div class="card">
-                            <img class="img-circle img-thumbnail social-img" src="./img/1.jpg" alt="Your profile image">
+                            <img class="img-circle img-thumbnail social-img" src="../static/images/noname.svg" th:src="@{/images/noname.svg}" alt="Your profile image">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="profile-block">
                 <h2>Your profile.</h2>
-                <form action="/changeProfile" method="post">
+                <form th:action="@{/user/settings}" th:object="${user}" action="/user/settings" method="post">
                     <div class="panel panel-default">
                         <div class="list-group">
-
                             <div class="list-group-item">
                                 <label for="email">Email: <input type="text" name="email" class="form-control"
-                                                                 id="email" disabled/></label>
+                                                                 th:field="*{email}"
+                                                                 id="email" readonly />
+                                </label>
                             </div>
                             <div class="list-group-item">
-                                <label for="firstname">First name: <input type="text" name="firstname"
-                                                                          class="form-control"
-                                                                          id="firstname"/></label>
+                                <label for="firstName">First name: <input type="text" name="firstName" class="form-control"
+                                                                          th:field="*{firstName}"
+                                                                          id="firstName"/>
+                                </label>
                             </div>
                             <div class="list-group-item">
-                                <label for="lastname">Last name: <input type="text" name="lastname" class="form-control"
-                                                                        id="lastname"/></label>
-                            </div>
-                            <div class="list-group-item">
-                                <label for="dob">Birth date: <input type="date" name="dob" class="form-control"
-                                                                    id="dob"/></label>
-                            </div>
-                            <div class="list-group-item"> Gender:
-                                <label class="radio-inline"><input type="radio" name="sex" value="1">Male</label>
-                                <label class="radio-inline"><input type="radio" name="sex" value="2">Female</label>
-                            </div>
-                            <div class="list-group-item">
-                                <label for="phone">Phone: <input type="text" name="phone" class="form-control"
-                                                                 id="phone"/></label>
+                                <label for="lastName">Last name: <input type="text" name="lastName" class="form-control"
+                                                                        th:field="*{lastName}"
+                                                                        id="lastName"/>
+                                </label>
                             </div>
                             <div class="list-group-item">
                                 <label for="datepicker">Birth date:
-                                    <input type="text" id="datepicker" size="30" class="form-control">
+                                    <input type="text" size="30" class="form-control" name="dob"
+                                           th:value="${#temporals.format(user.dob, 'dd.MM.yyyy')}"
+                                           id="datepicker">
                                 </label>
-
                             </div>
-
+                            <div class="list-group-item"> Gender:
+                                <label class="radio-inline">
+                                    <input type="radio" th:field="*{sex}" value="Male" th:checked="${user.sex.equals('Male')}">Male
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" th:field="*{sex}" value="Female" th:checked="${user.sex.equals('Female')}">Female
+                                </label>
+                            </div>
+                            <div class="list-group-item">
+                                <label for="phone">Phone: <input type="text" name="phone" class="form-control"
+                                                                 th:field="*{phone}"
+                                                                 id="phone"/>
+                                </label>
+                            </div>
                         </div>
+                        <input type="hidden" th:field="*{id}" />
                     </div>
                     <button type="submit" class="btn btn-lg btn-success">Change profile</button>
                 </form>

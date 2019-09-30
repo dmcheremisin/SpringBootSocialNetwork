@@ -1,5 +1,6 @@
 package info.cheremisin.social.network.service.impl;
 
+import info.cheremisin.social.network.constants.Gender;
 import info.cheremisin.social.network.converters.UserDtoToUserConverter;
 import info.cheremisin.social.network.converters.UserToUserDtoConverter;
 import info.cheremisin.social.network.dto.UserDTO;
@@ -7,18 +8,11 @@ import info.cheremisin.social.network.entities.Role;
 import info.cheremisin.social.network.entities.User;
 import info.cheremisin.social.network.repositories.UserRepository;
 import info.cheremisin.social.network.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.stream.Collectors;
 
 import static info.cheremisin.social.network.constants.Constants.ROLE_USER;
 
@@ -46,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(UserDTO userDTO) {
+    public void createUser(UserDTO userDTO) {
         User user = userDtoToUserConverter.convert(userDTO);
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
@@ -58,5 +52,13 @@ public class UserServiceImpl implements UserService {
         user.getRoles().add(role);
 
         userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void updateUser(UserDTO user) {
+        int gender = Gender.getGenderByName(user.getSex());
+        userRepository.updateUserSettings(user.getFirstName(), user.getLastName(), user.getDob(), gender, user.getPhone(),
+                user.getId());
     }
 }

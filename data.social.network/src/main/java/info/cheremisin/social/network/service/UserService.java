@@ -6,6 +6,8 @@ public interface UserService {
 
     UserDTO getUserByEmail(String email);
 
-    void saveUser(UserDTO userDTO);
+    void createUser(UserDTO userDTO);
+
+    void updateUser(UserDTO userDTO);
 
 }

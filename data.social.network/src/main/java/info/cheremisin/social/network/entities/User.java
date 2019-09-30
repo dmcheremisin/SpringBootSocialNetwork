@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -48,7 +47,6 @@ public class User {
     private String lastName;
 
     @Column(name = "date_of_birth")
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate dob;
 
     @Column(name = "sex")

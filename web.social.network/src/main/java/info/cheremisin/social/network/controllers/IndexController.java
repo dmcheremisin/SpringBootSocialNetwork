@@ -48,7 +48,7 @@ public class IndexController {
             model.addAttribute("user", new UserDTO());
             return "index";
         }
-        userService.saveUser(userDTO);
+        userService.createUser(userDTO);
         return "registration-confirmation";
     }
 
