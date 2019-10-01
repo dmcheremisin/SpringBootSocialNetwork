@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     private UserDtoToUserConverter userDtoToUserConverter;
     private BCryptPasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, UserToUserDtoConverter userToUserDtoConverter,
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserToUserDtoConverter userToUserDtoConverter,
                            UserDtoToUserConverter userDtoToUserConverter, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
