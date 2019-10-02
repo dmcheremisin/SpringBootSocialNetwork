@@ -43,6 +43,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO getUserById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id = " + id));
+        UserDTO userDTO = userToUserDtoConverter.convert(user);
+        return userDTO;
+    }
+
+    @Override
     public void createUser(UserDTO userDTO) {
         User user = userDtoToUserConverter.convert(userDTO);
 
@@ -68,5 +75,19 @@ public class UserServiceImpl implements UserService {
         int gender = Gender.getGenderByName(user.getSex());
         userRepository.updateUserSettings(user.getFirstName(), user.getLastName(), user.getDob(), gender, user.getPhone(),
                 user.getId());
+    }
+
+    @Override
+    public void updateUserImage(UserDTO userDTO, byte[] image) {
+        User user = userRepository.findById(userDTO.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+        Byte[] byteObject = new Byte[image.length];
+        int i = 0;
+        for (byte aByte : image) {
+            byteObject[i++] = aByte;
+        }
+
+        user.setImage(byteObject);
+        userRepository.save(user);
+
     }
 }

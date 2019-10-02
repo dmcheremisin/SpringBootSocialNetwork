@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
@@ -59,7 +60,8 @@ public class User {
     private Boolean blocked;
 
     @Column(name = "image")
-    private String image;
+    @Lob
+    private Byte[] image;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role",

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="template.html :: header('Your profile')"></head>
+<head th:replace="template.html :: header('Your profile', true)"></head>
 
 <body th:with="user=${session.user}">
 
@@ -16,7 +16,8 @@
             <h2>Your avatar.</h2>
             <div class="profile-block">
                 <div>
-                    <div class="image-drop border-dotted" ondrop="dragAndDrop(event)" ondragover="dragEnter(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
+                    <div class="image-drop border-dotted" ondrop="dragAndDrop(event)" ondragover="dragEnter(event)"
+                         ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
                         <p class="drop-text">Drop your image here.</p>
                     </div>
                     <div class="btn-vertical">
@@ -24,7 +25,8 @@
                     </div>
                     <div class="image-right">
                         <div class="card">
-                            <img class="img-circle img-thumbnail social-img" src="../static/images/noname.svg" th:src="@{/images/noname.svg}" alt="Your profile image">
+                            <img class="img-circle img-thumbnail social-img" src="../static/images/noname.svg"
+                                 th:src="@{'/user/' + ${user.id} + '/image'}" alt="Your profile image">
                         </div>
                     </div>
                 </div>

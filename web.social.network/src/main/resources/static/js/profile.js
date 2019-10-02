@@ -34,13 +34,15 @@ function dragLeave(event) {
 };
 $("button.btn-left").click(function (event) {
     event.preventDefault();
-    var url = './index.html';
     var formData = new FormData();
     console.log(file);
-    formData.append("file", file);
+    formData.append("imagefile", file);
+    var token = $("meta[name='_csrf']").attr("content");
     $.ajax({
-        url: '/upload',
+        url: '/user/uploadImage',
         type: 'POST',
+        enctype: 'multipart/form-data',
+        headers: { "X-CSRF-TOKEN": token },
         data: formData,
         processData: false,
         contentType: false

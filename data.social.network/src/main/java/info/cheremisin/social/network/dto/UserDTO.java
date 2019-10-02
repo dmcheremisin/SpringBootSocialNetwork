@@ -57,6 +57,6 @@ public class UserDTO {
     private String sex;
     private String phone;
     private Boolean blocked;
-    private String image;
+    private Byte[] image;
 
 }
