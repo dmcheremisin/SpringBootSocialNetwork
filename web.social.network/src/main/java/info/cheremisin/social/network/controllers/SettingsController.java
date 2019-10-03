@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,7 +28,6 @@ import static info.cheremisin.social.network.utils.ServerUtils.getUserFromSessio
 @Controller
 @RequestMapping("/user")
 public class SettingsController {
-
     private UserService userService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -44,7 +42,7 @@ public class SettingsController {
     }
 
     @GetMapping("/settings")
-    public String getSettingsPage(HttpServletRequest request, Model model) {
+    public String getSettingsPage(Model model) {
         model.addAttribute("passwordChangeDTO", new PasswordChangeDTO());
         return "settings";
     }
@@ -86,14 +84,15 @@ public class SettingsController {
         response.sendRedirect(request.getContextPath() + "/user/settings");
     }
 
-    @GetMapping("/{id}/image")
-    public void getImageFromDb(@PathVariable Long id, HttpServletResponse response) throws IOException {
-        UserDTO user = userService.getUserById(id);
-        if (user.getImage() != null) {
-            byte[] byteArray = new byte[user.getImage().length];
-            int i = 0;
+    @GetMapping("/image")
+    public void getImageFromDb(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        UserDTO user = getUserFromSession(request);
+        if (user.getHasImage()) {
+            Byte[] userImage = userService.getUserImage(user.getId());
 
-            for (Byte wrappedByte : user.getImage()){
+            byte[] byteArray = new byte[userImage.length];
+            int i = 0;
+            for (Byte wrappedByte : userImage){
                 byteArray[i++] = wrappedByte; //auto unboxing
             }
 

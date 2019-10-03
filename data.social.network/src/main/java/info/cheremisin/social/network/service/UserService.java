@@ -8,6 +8,8 @@ public interface UserService {
 
     UserDTO getUserById(Long id);
 
+    Byte[] getUserImage(Long id);
+
     void createUser(UserDTO userDTO);
 
     void updatePassword(String password, Long id);

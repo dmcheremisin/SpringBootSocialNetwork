@@ -35,6 +35,10 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    private User getUser(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id = " + id));
+    }
+
     @Override
     public UserDTO getUserByEmail(String email) {
         User user = userRepository.findUserByEmail(email);
@@ -44,9 +48,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id = " + id));
+        User user = getUser(id);
         UserDTO userDTO = userToUserDtoConverter.convert(user);
         return userDTO;
+    }
+
+    @Override
+    public Byte[] getUserImage(Long id) {
+        User user = getUser(id);
+        return user.getImage();
     }
 
     @Override
@@ -79,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserImage(UserDTO userDTO, byte[] image) {
-        User user = userRepository.findById(userDTO.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = getUser(userDTO.getId());
         Byte[] byteObject = new Byte[image.length];
         int i = 0;
         for (byte aByte : image) {
@@ -88,6 +98,6 @@ public class UserServiceImpl implements UserService {
 
         user.setImage(byteObject);
         userRepository.save(user);
-
+        userDTO.setHasImage(true);
     }
 }

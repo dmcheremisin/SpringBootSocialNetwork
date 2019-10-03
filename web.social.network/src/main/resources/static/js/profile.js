@@ -45,10 +45,13 @@ $("button.btn-left").click(function (event) {
         headers: { "X-CSRF-TOKEN": token },
         data: formData,
         processData: false,
-        contentType: false
+        contentType: false,
+        error: function () {
+            alert("Please, try to use image smaller size");
+        }
     }).then(function () {
         window.location.reload();
-    });
+    })
 });
 $(function() {
     $.datepicker.regional['ru'] = {

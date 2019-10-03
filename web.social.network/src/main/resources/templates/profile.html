@@ -19,9 +19,9 @@
                     <tr>
                         <td>
                             <div class="card">
-                                <img class="img-circle img-thumbnail social-img" th:if="${user.image == null}"
-                                     th:src="@{/images/noname.svg}" alt="Your profile image">
-                                <img class="img-circle img-thumbnail social-img" th:unless="${user.image == null}"
+                                <img th:if="${user.hasImage}" class="img-circle img-thumbnail social-img"
+                                     th:src="@{'/user/image'}" alt="Your profile image">
+                                <img th:unless="${user.hasImage}" class="img-circle img-thumbnail social-img"
                                      th:src="@{/images/noname.svg}" alt="Your profile image">
                                 <h3 th:text="${user.firstName + ' ' + user.lastName}">Tyrion Lanister</h3>
                             </div>
