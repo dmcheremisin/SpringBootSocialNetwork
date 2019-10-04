@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="template.html :: header('Users', false)"></head>
+
+<body th:with="sessionUser=${session.user}">
+
+<div th:replace="template.html :: navbar" ></div>
+<hr/>
+
+<div class="container">
+    <div class="row">
+        <div th:replace="template.html :: menu" ></div>
+
+        <div class="col-md-9">
+            <div class="friends-top">
+                <form action="#" th:action="@{/user/users}" method="get">
+                    <div class="input-group stylish-input-group">
+                        <input type="text" name="search" th:value="${search}" class="form-control"placeholder="Search">
+                        <span class="input-group-addon">
+                        <button type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                    </div>
+                </form>
+            </div>
+
+            <div class="friends-top">
+                <h3>Users:</h3>
+                <table class="table users">
+                    <tr th:each="user : ${page.content}">
+                        <td>
+                            <a href="#" th:text="${user.firstName + ' ' + user.lastName}"><img class="img-circle img-thumbnail img-message" src="./img/sansa.jpg"/>Sansa Stark</a>
+                            <br/><span th:text="${#temporals.format(user.dob, 'dd.MM.yyyy') + ', ' + user.sex}">23.05.1986, Female</span>
+                        </td>
+                        <td>
+                            <a th:href="@{/user/messages(companion=${user.id})}" href="#" class="btn btn-info">Message</a>
+                        </td>
+                    </tr>
+                </table>
+                <div>
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item" th:classappend="${page.hasPrevious} ? '' : 'disabled'">
+                                <a class="page-link" th:href="@{/user/users(page=${page.currentPage - 1}, search=${search})}">Previous</a>
+                            </li>
+                            <li class="page-item" th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}"
+                                th:classappend="${i == page.currentPage} ? 'active' : '' " >
+                                <a class="page-link" th:href="@{/user/users(page=${i}, search=${search})}" th:text="${i+1}">1</a>
+                            </li>
+                            <li class="page-item" th:classappend="${page.hasNext} ? '' : 'disabled'">
+                                <a class="page-link" th:href="@{/user/users(page=${page.currentPage + 1}, search=${search})}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="template.html :: footer"></div>
+
+</body>
+</html>

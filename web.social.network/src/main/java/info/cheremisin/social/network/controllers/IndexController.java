@@ -32,7 +32,7 @@ public class IndexController {
 
     @GetMapping("/access-denied")
     public String accessDenied() {
-        return "access-denied";
+        return "service/access-denied";
     }
 
     @PostMapping("/register")
@@ -45,11 +45,11 @@ public class IndexController {
         UserDTO userByEmail = userService.getUserByEmail(email);
         if(userByEmail != null) {
             model.addAttribute("registrationError", true);
-            model.addAttribute("user", new UserDTO());
+            model.addAttribute("user", userDTO);
             return "index";
         }
         userService.createUser(userDTO);
-        return "registration-confirmation";
+        return "service/registration-confirmation";
     }
 
 }
