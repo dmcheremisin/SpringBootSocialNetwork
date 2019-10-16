@@ -12,16 +12,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
+public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// add a reference to our security data source
 	private UserDetailsServiceImpl userDetailsService;
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	public DemoSecurityConfig(UserDetailsServiceImpl userDetailsService,
-							  CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
+	public ApplicationSecurityConfig(UserDetailsServiceImpl userDetailsService,
+									 CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
+									 BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.userDetailsService = userDetailsService;
 		this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
 	@Override
@@ -48,14 +51,6 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 			.exceptionHandling().accessDeniedPage("/access-denied");
 
 //		http.authorizeRequests().antMatchers("/**").permitAll().anyRequest().authenticated().and().csrf().disable();
-		
-	}
-	
-	//beans
-	//bcrypt bean definition
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
 	}
 
 	//authenticationProvider bean definition
@@ -63,7 +58,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
 		auth.setUserDetailsService(userDetailsService); //set the custom user details service
-		auth.setPasswordEncoder(passwordEncoder()); //set the password encoder - bcrypt
+		auth.setPasswordEncoder(bCryptPasswordEncoder); //set the password encoder - bcrypt
 		return auth;
 	}
 
