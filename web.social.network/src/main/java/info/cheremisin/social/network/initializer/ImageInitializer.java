@@ -1,5 +1,7 @@
 package info.cheremisin.social.network.initializer;
 
+import info.cheremisin.social.network.service.ImageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
@@ -12,7 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Created by Dmitrii on 06.10.2019.
@@ -20,16 +21,20 @@ import java.nio.file.Paths;
 @Component
 @Profile({"dev", "qa"})
 public class ImageInitializer implements ApplicationListener<ContextRefreshedEvent> {
-
-    private static final String PROFILE_IMAGES = "profileImages";
+    private ImageService imageService;
 
     @Value("classpath:profileImages/*")
     private Resource[] resources;
 
+    @Autowired
+    public void setImageService(ImageService imageService) {
+        this.imageService = imageService;
+    }
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         try {
-            Path pathImages = Paths.get(".").resolve(PROFILE_IMAGES);
+            Path pathImages = imageService.getProfileImagesPath();
             if(pathImages.toFile().exists()) {
                 Files.walk(pathImages)
                         .map(Path::toFile)

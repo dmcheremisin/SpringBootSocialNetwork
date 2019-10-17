@@ -3,7 +3,7 @@
 
 <head th:replace="template.html :: header('Your profile', false)"></head>
 
-<body th:with="user=${session.user}">
+<body>
 
 <div th:replace="template.html :: navbar" ></div>
 <hr/>
@@ -19,9 +19,9 @@
                     <tr>
                         <td>
                             <div class="card">
-                                <img th:if="${user.hasImage}" class="img-circle img-thumbnail social-img"
-                                     th:src="@{'/user/image'}" alt="Your profile image">
-                                <img th:unless="${user.hasImage}" class="img-circle img-thumbnail social-img"
+                                <img th:if="${user.image != null}" class="img-circle img-thumbnail social-img"
+                                     th:src="@{'/' + ${user.image}}" alt="Your profile image">
+                                <img th:unless="${user.image != null}" class="img-circle img-thumbnail social-img"
                                      th:src="@{/images/noname.svg}" alt="Your profile image">
                                 <h3 th:text="${user.firstName + ' ' + user.lastName}">Tyrion Lanister</h3>
                             </div>

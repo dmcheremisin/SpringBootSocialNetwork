@@ -3,12 +3,7 @@ package info.cheremisin.social.network.dto;
 import info.cheremisin.social.network.validation.FieldMatch;
 import info.cheremisin.social.network.validation.Password;
 import info.cheremisin.social.network.validation.ValidEmail;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
@@ -57,6 +52,6 @@ public class UserDTO {
     private String sex;
     private String phone;
     private Boolean blocked;
-    private Boolean hasImage;
+    private String image;
 
 }

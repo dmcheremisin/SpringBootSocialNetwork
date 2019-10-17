@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 public class IndexController {
@@ -22,9 +24,10 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String indexPage(HttpServletRequest request, Model model) {
+    public String indexPage(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         if(request.getSession().getAttribute("user") != null) {
-            return "profile";
+            response.sendRedirect(request.getContextPath() + "/user/profile");
+            return null;
         }
         model.addAttribute("user", new UserDTO());
         return "index";

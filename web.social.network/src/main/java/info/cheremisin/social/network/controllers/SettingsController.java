@@ -2,9 +2,10 @@ package info.cheremisin.social.network.controllers;
 
 import info.cheremisin.social.network.dto.PasswordChangeDTO;
 import info.cheremisin.social.network.dto.UserDTO;
+import info.cheremisin.social.network.service.ImageService;
 import info.cheremisin.social.network.service.UserService;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +20,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Set;
 
 import static info.cheremisin.social.network.utils.ServerUtils.getUserFromSession;
 
@@ -30,6 +30,10 @@ import static info.cheremisin.social.network.utils.ServerUtils.getUserFromSessio
 public class SettingsController {
     private UserService userService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private ImageService imageService;
+
+    @Value("#{'${allowed.file.types}'.split(',')}")
+    private Set<String> allowedExtensions;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -39,6 +43,11 @@ public class SettingsController {
     @Autowired
     public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    @Autowired
+    public void setImageService(ImageService imageService) {
+        this.imageService = imageService;
     }
 
     @GetMapping("/settings")
@@ -78,28 +87,16 @@ public class SettingsController {
     @PostMapping("/uploadImage")
     public void uploadImage(MultipartHttpServletRequest request, HttpServletResponse response) throws IOException {
         MultipartFile multipartFile = request.getFile("imagefile");
-        byte[] bytes = multipartFile.getBytes();
-        UserDTO user = getUserFromSession(request);
-        userService.updateUserImage(user, bytes);
-        response.sendRedirect(request.getContextPath() + "/user/settings");
-    }
-
-    @GetMapping("/image")
-    public void getImageFromDb(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        UserDTO user = getUserFromSession(request);
-        if (user.getHasImage()) {
-            Byte[] userImage = userService.getUserImage(user.getId());
-
-            byte[] byteArray = new byte[userImage.length];
-            int i = 0;
-            for (Byte wrappedByte : userImage){
-                byteArray[i++] = wrappedByte; //auto unboxing
-            }
-
-            response.setContentType("image/jpeg");
-            InputStream is = new ByteArrayInputStream(byteArray);
-            IOUtils.copy(is, response.getOutputStream());
+        String contentType = multipartFile.getContentType();
+        if(!allowedExtensions.contains(contentType)) {
+            throw new RuntimeException("File extension is not supported");
         }
+
+        UserDTO user = getUserFromSession(request);
+
+        String newFileName = imageService.updateProfileImage(user, multipartFile);
+        userService.updateUserImage(user, newFileName);
+        response.sendRedirect(request.getContextPath() + "/user/settings");
     }
 
 }

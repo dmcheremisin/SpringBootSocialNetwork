@@ -31,7 +31,11 @@
                 <table class="table users">
                     <tr th:each="user : ${page.content}">
                         <td>
-                            <a href="#" th:text="${user.firstName + ' ' + user.lastName}"><img class="img-circle img-thumbnail img-message" src="./img/sansa.jpg"/>Sansa Stark</a>
+                            <a th:href="@{'/user/profile/' + ${user.id}}">
+                                <img class="img-circle img-thumbnail img-message"
+                                     th:src="@{'/' + ${user.image}}" alt="Your profile image">
+                                <span th:text="${user.firstName + ' ' + user.lastName}">Sansa Stark</span>
+                            </a>
                             <br/><span th:text="${#temporals.format(user.dob, 'dd.MM.yyyy') + ', ' + user.sex}">23.05.1986, Female</span>
                         </td>
                         <td>

@@ -31,6 +31,7 @@ public class UserDtoToUserConverter implements Converter<UserDTO, User> {
                 .phone(userDTO.getPhone())
                 .sex(Gender.getGenderByName(userDTO.getSex()))
                 .blocked(userDTO.getBlocked())
+                .image(userDTO.getImage())
                 .dob(userDTO.getDob());
         if(userDTO.getPassword() != null) {
             String password = passwordEncoder.encode(userDTO.getPassword());

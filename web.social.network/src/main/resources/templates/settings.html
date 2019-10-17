@@ -25,9 +25,9 @@
                     </div>
                     <div class="image-right">
                         <div class="card">
-                            <img th:if="${user.hasImage}" class="img-circle img-thumbnail social-img"
-                                 th:src="@{'/user/image'}" alt="Your profile image">
-                            <img th:unless="${user.hasImage}" class="img-circle img-thumbnail social-img"
+                            <img th:if="${user.image != null}" class="img-circle img-thumbnail social-img"
+                                 th:src="@{'/' + ${user.image}}" alt="Your profile image">
+                            <img th:unless="${user.image != null}" class="img-circle img-thumbnail social-img"
                                  th:src="@{/images/noname.svg}" alt="Your profile image">
                         </div>
                     </div>

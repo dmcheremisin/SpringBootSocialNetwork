@@ -23,7 +23,7 @@ public class UserToUserDtoConverter implements Converter<User, UserDTO> {
                 .phone(user.getPhone())
                 .sex(Gender.getGenderById(user.getSex()).name())
                 .blocked(user.getBlocked())
-                .hasImage(user.getImage() != null && user.getImage().length > 0)
+                .image(user.getImage())
                 .dob(user.getDob())
                 .build();
     }

@@ -47,6 +47,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO getUserById(Long id) {
+        User user = getUser(id);
+        UserDTO userDTO = userToUserDtoConverter.convert(user);
+        return userDTO;
+    }
+
+    @Override
     public UserDTO getUserByEmail(String email) {
         User user = userRepository.findUserByEmail(email);
         UserDTO userDTO = userToUserDtoConverter.convert(user);
@@ -66,12 +73,6 @@ public class UserServiceImpl implements UserService {
         Page<User> pagedUsers = userRepository.findAllWithSearch(id, search, pageable);
         PageDTO<UserDTO> pagedUserDto = pageToPageDtoUserConverter.convert(pagedUsers);
         return pagedUserDto;
-    }
-
-    @Override
-    public Byte[] getUserImage(Long id) {
-        User user = getUser(id);
-        return user.getImage();
     }
 
     @Override
@@ -103,16 +104,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUserImage(UserDTO userDTO, byte[] image) {
+    public void updateUserImage(UserDTO userDTO, String fileName) {
         User user = getUser(userDTO.getId());
-        Byte[] byteObject = new Byte[image.length];
-        int i = 0;
-        for (byte aByte : image) {
-            byteObject[i++] = aByte;
-        }
-
-        user.setImage(byteObject);
+        user.setImage(fileName);
         userRepository.save(user);
-        userDTO.setHasImage(true);
+        userDTO.setImage(fileName);
     }
 }
