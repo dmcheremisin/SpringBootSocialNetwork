@@ -33,10 +33,10 @@
                         <td>
                             <a th:replace="template.html :: profileImage(${user})"></a>
                         <td>
-                            <button class="btn btn-success">Accept</button>
+                            <a class="btn btn-success" th:href="@{'/user/friends/' + ${user.id} + '/accept'}">Accept</a>
                         </td>
                         <td>
-                            <button class="btn btn-danger">Decline</button>
+                            <a class="btn btn-danger" th:href="@{'/user/friends/' + ${user.id} + '/decline'}">Decline</a>
                         </td>
                         <td>
                             <button class="btn btn-info">Message</button>
@@ -70,7 +70,7 @@
                             <button class="btn btn-info">Message</button>
                         </td>
                         <td>
-                            <button class="btn btn-danger">Remove</button>
+                            <a class="btn btn-danger" th:href="@{'/user/friends/' + ${user.id} + '/decline'}">Remove</a>
                         </td>
                     </tr>
                 </table>
