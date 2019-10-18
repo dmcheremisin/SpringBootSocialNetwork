@@ -27,11 +27,28 @@
             </div>
 
             <div class="friends-top">
-                <h3>Friends requests</h3>
+                <h3>Your requests</h3>
                 <table class="table friends">
                     <tr th:each="user : ${usersNotAcceptedRequests}">
                         <td>
                             <a th:replace="template.html :: profileImage(${user})"></a>
+                        </td>
+                        <td>
+                            <button class="btn btn-info">Message</button>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="friends-top">
+                <h3>Friends requests to you</h3>
+                <table class="table friends">
+                    <tr th:each="user : ${notAcceptedRequestsToUser}">
+                        <td>
+                            <a th:replace="template.html :: profileImage(${user})"></a>
+                        </td>
                         <td>
                             <a class="btn btn-success" th:href="@{'/user/friends/' + ${user.id} + '/accept'}">Accept</a>
                         </td>
@@ -41,21 +58,6 @@
                         <td>
                             <button class="btn btn-info">Message</button>
                         </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="friends-top">
-                <h3>Your requests</h3>
-                <table class="table friends">
-                    <tr th:each="user : ${notAcceptedRequestsToUser}">
-                        <td>
-                            <a th:replace="template.html :: profileImage(${user})"></a>
-                        <td>
-                        <button class="btn btn-info">Message</button>
-                        </td>
-                        <td></td>
-                        <td></td>
                     </tr>
                 </table>
             </div>
