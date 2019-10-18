@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,9 +26,10 @@ public class FriendsController {
     }
 
     @GetMapping
-    public String getAllFriends(Model model, HttpServletRequest request) {
+    public String getAllFriends(@RequestParam(value = "search", required = false) String search,
+                                Model model, HttpServletRequest request) {
         UserDTO user = getUserFromSession(request);
-        Map<String, Set<UserDTO>> friends = friendsService.getFriends(user.getId());
+        Map<String, Set<UserDTO>> friends = friendsService.getFriends(user.getId(), search);
         model.addAttribute("usersNotAcceptedRequests", friends.get("usersNotAcceptedRequests"));
         model.addAttribute("notAcceptedRequestsToUser", friends.get("notAcceptedRequestsToUser"));
         model.addAttribute("friendsOfUser", friends.get("friendsOfUser"));

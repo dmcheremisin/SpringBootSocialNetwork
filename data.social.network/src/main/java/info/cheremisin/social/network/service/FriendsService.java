@@ -7,5 +7,5 @@ import java.util.Set;
 
 public interface FriendsService {
 
-    Map<String, Set<UserDTO>> getFriends(Long userId);
+    Map<String, Set<UserDTO>> getFriends(Long userId, String search);
 }
