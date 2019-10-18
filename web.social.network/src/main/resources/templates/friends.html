@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="template.html :: header('Users', false)"></head>
+
+<body th:with="sessionUser=${session.user}">
+
+<div th:replace="template.html :: navbar" ></div>
+<hr/>
+
+<div class="container">
+    <div class="row">
+        <div th:replace="template.html :: menu" ></div>
+
+        <div class="col-md-9">
+            <div class="friends-top">
+                <form action="#" th:action="@{/user/friends}" method="get">
+                    <div class="input-group stylish-input-group">
+                        <input type="text" name="search" th:value="${search}" class="form-control" placeholder="Search">
+                        <span class="input-group-addon">
+                        <button type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                    </div>
+                </form>
+            </div>
+
+            <div class="friends-top">
+                <h3>Friends requests</h3>
+                <table class="table friends">
+                    <tr th:each="user : ${usersNotAcceptedRequests}">
+                        <td>
+                            <a th:replace="template.html :: profileImage(${user})"></a>
+                        <td>
+                            <button class="btn btn-success">Accept</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger">Decline</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-info">Message</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="friends-top">
+                <h3>Your requests</h3>
+                <table class="table friends">
+                    <tr th:each="user : ${notAcceptedRequestsToUser}">
+                        <td>
+                            <a th:replace="template.html :: profileImage(${user})"></a>
+                        <td>
+                        <button class="btn btn-info">Message</button>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="friends-top">
+                <h3>Your friends</h3>
+                <table class="table friends">
+                    <tr th:each="user : ${friendsOfUser}">
+                        <td>
+                            <a th:replace="template.html :: profileImage(${user})"></a>
+                        <td>
+                            <button class="btn btn-info">Message</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger">Remove</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="template.html :: footer"></div>
+
+</body>
+</html>

@@ -50,7 +50,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.exceptionHandling().accessDeniedPage("/access-denied");
 
-//		http.authorizeRequests().antMatchers("/**").permitAll().anyRequest().authenticated().and().csrf().disable();
+//		http.authorizeRequests().antMatchers("/").permitAll().and()
+//				.authorizeRequests().antMatchers("/h2-console/**").permitAll();
+//		http.csrf().disable();
+//		http.headers().frameOptions().disable();
 	}
 
 	//authenticationProvider bean definition

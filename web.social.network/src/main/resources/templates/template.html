@@ -83,7 +83,13 @@
             </div>
         </div>
         <div class="col-md-9">
-            <p>Some other content</p>
+            <p>
+                <a th:fragment="profileImage(user)" th:href="@{'/user/profile/' + ${user.id}}">
+                    <img class="img-circle img-thumbnail img-message"
+                         th:src="@{'/' + ${user.image}}" alt="User's image">
+                    <span th:text="${user.firstName + ' ' + user.lastName}">Sansa Stark</span>
+                </a>
+            </p>
         </div>
     </div>
 </div>

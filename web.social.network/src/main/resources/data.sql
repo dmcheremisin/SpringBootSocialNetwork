@@ -34,3 +34,15 @@ VALUES
 (10, 1),
 (11, 1),
 (12, 1);
+
+INSERT INTO friendship (id, user_sender, user_receiver, accepted)
+VALUES
+(null, 1,  2, true),
+(null, 1,  3, true),
+(null, 2,  3, true),
+(null, 4,  5, true),
+(null, 4,  6, true),
+(null, 5,  1, false),
+(null, 6,  1, false),
+(null, 1, 10, false),
+(null, 1,  8, false);
