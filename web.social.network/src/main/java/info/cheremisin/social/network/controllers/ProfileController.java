@@ -1,8 +1,8 @@
 package info.cheremisin.social.network.controllers;
 
 import info.cheremisin.social.network.dto.UserDTO;
+import info.cheremisin.social.network.service.FriendsService;
 import info.cheremisin.social.network.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +18,11 @@ import static info.cheremisin.social.network.utils.ServerUtils.getUserFromSessio
 public class ProfileController {
 
     private UserService userService;
+    private FriendsService friendsService;
 
-    @Autowired
-    public void setUserService(UserService userService) {
+    public ProfileController(UserService userService, FriendsService friendsService) {
         this.userService = userService;
+        this.friendsService = friendsService;
     }
 
     @GetMapping("/profile")
@@ -32,9 +33,12 @@ public class ProfileController {
     }
 
     @GetMapping("/profile/{id}")
-    public String getUserPage(@PathVariable Long id, Model model) {
+    public String getUserPage(@PathVariable Long id, Model model, HttpServletRequest request) {
+        UserDTO sessionUser = getUserFromSession(request);
         UserDTO user = userService.getUserById(id);
+        Boolean friendship = friendsService.checkFriendship(sessionUser, user);
         model.addAttribute("user", user);
+        model.addAttribute("usersHaveFriendship", friendship);
         return "profile";
     }
 }

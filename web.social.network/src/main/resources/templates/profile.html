@@ -3,7 +3,7 @@
 
 <head th:replace="template.html :: header('Your profile', false)"></head>
 
-<body>
+<body th:with="sessionUser=${session.user}">
 
 <div th:replace="template.html :: navbar" ></div>
 <hr/>
@@ -26,7 +26,15 @@
                                 <h3 th:text="${user.firstName + ' ' + user.lastName}">Tyrion Lanister</h3>
                             </div>
                             <table class="table">
-                                <tr>
+                                <tr th:if="${sessionUser.id != user.id}">
+                                    <td th:if="${usersHaveFriendship}">
+                                        <a th:href="@{/user/friends}" class="btn btn-success">Friend <span class="glyphicon glyphicon-ok"></span></a>
+                                    </td>
+                                    <td th:unless="${usersHaveFriendship}">
+                                        <a th:href="@{'/user/friends/' + ${user.id} + '/addToFriends'}" class="btn btn-success">Add to friends</a>
+                                    </td>
+                                </tr>
+                                <tr th:if="${sessionUser.id != user.id}">
                                     <td>
                                         <form method="post" action="/friends">
                                             <button class="btn btn-info" type="submit" >Send message</button>

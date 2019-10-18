@@ -12,4 +12,8 @@ public interface FriendsService {
     void deleteFriendship(UserDTO userDTO, Long friendId);
 
     void acceptFriendship(UserDTO userDTO, Long friendId);
+
+    void addToFriends(UserDTO user, Long friendId);
+
+    Boolean checkFriendship(UserDTO user, UserDTO friend);
 }

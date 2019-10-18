@@ -52,4 +52,11 @@ public class FriendsController {
         response.sendRedirect(request.getContextPath() + "/user/friends");
     }
 
+    @GetMapping("/{friendId}/addToFriends")
+    public void addToFriends(@PathVariable Long friendId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        UserDTO user = getUserFromSession(request);
+        friendsService.addToFriends(user, friendId);
+        response.sendRedirect(request.getContextPath() + "/user/friends");
+    }
+
 }

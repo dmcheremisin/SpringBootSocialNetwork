@@ -88,4 +88,21 @@ public class FriendsServiceImpl implements FriendsService {
         friendshipRepository.deleteFriendRequests(user, friend);
         friendshipRepository.addFriendship(user, friend);
     }
+
+    @Override
+    @Transactional
+    public void addToFriends(UserDTO userDTO, Long friendId) {
+        User user = userDtoToUserConverter.convert(userDTO);
+        User friend = userRepository.findById(friendId)
+                .orElseThrow(() -> new RuntimeException("User not found with id = " + friendId));
+        friendshipRepository.addToFriends(user, friend);
+    }
+
+    @Override
+    @Transactional
+    public Boolean checkFriendship(UserDTO userDTO, UserDTO friendDTO) {
+        User user = userDtoToUserConverter.convert(userDTO);
+        User friend = userDtoToUserConverter.convert(friendDTO);
+        return friendshipRepository.checkFriendshipExists(user, friend);
+    }
 }

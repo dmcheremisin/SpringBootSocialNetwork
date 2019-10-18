@@ -13,12 +13,21 @@ public interface FriendshipRepository extends CrudRepository<Friendship, Long> {
     List<Friendship> findAllByUserSenderIdOrUserReceiverId(Long userSenderId, Long userReceiverId);
 
     @Modifying(clearAutomatically = true)
-    @Query("DELETE FROM Friendship f WHERE (f.userSender = :userId AND f.userReceiver = :friendId) " +
-            "OR (f.userSender = :friendId AND f.userReceiver = :userId)")
-    void deleteFriendRequests(User userId, User friendId);
+    @Query("DELETE FROM Friendship f WHERE (f.userSender = :user AND f.userReceiver = :friend) " +
+            "OR (f.userSender = :friend AND f.userReceiver = :user)")
+    void deleteFriendRequests(User user, User friend);
 
     @Modifying(clearAutomatically = true)
     @Query(value = "insert into friendship (user_sender, user_receiver, accepted) VALUES (:user, :friend, true)",
             nativeQuery = true)
     void addFriendship(User user, User friend);
+
+    @Modifying(clearAutomatically = true)
+    @Query(value = "insert into friendship (user_sender, user_receiver, accepted) VALUES (:user, :friend, false)",
+            nativeQuery = true)
+    void addToFriends(User user, User friend);
+
+    @Query("SELECT case when count(f)> 0 then true else false end FROM Friendship f WHERE (f.userSender = :user AND f.userReceiver = :friend) " +
+            "OR (f.userSender = :friend AND f.userReceiver = :user)")
+    boolean checkFriendshipExists(User user, User friend);
 }
