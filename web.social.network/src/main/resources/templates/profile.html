@@ -90,16 +90,21 @@
                     </tr>
                 </table>
             </div>
-            <div class="profile-block">
+            <div class="profile-block" th:if="${sessionUser.id == user.id}">
                 <h3>Recent Message:</h3>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="card">
-                            <a href="#"><img class="img-circle img-thumbnail img-message" src="./img/1.jpg" /> Tyrion</a>&nbsp; to &nbsp;
-                            <a href="#"><img class="img-circle img-thumbnail img-message" src="./img/2.png" /> Cersei</a>
+                            <a th:replace="template.html :: messageUser(${recentMessage.sender})"></a>&nbsp;
+                            to &nbsp;
+                            <a th:replace="template.html :: messageUser(${recentMessage.receiver})"></a>
                         </div>
                     </div>
-                    <div class="panel-body"><a href="conversation.html">Hello! How are you?</a></div>
+                    <div class="panel-body">
+                        <div class="panel-body">
+                            <a th:href="@{'/user/conversation/' + ${recentMessage.companionId}}" th:text="${recentMessage.message}">Hello! How are you?</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="profile-block">

@@ -1,20 +1,9 @@
 package info.cheremisin.social.network.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import java.util.Date;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -29,8 +18,8 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "date")
-    private Date date;
+    @Column(name = "time")
+    private LocalDateTime time;
 
     @Column(name = "message")
     private String message;
@@ -42,6 +31,5 @@ public class Message {
     @ManyToOne
     @JoinColumn(name = "receiver")
     private User receiver;
-
 
 }

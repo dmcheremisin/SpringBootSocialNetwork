@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="template.html :: header('Conversation', false)"></head>
+
+<body th:with="sessionUser=${session.user}">
+
+<div th:replace="template.html :: navbar" ></div>
+<hr/>
+
+<div class="container">
+    <div class="row">
+        <div th:replace="template.html :: menu" ></div>
+
+        <div class="col-md-9">
+            <h2>Conversation with
+                <a th:replace="template.html :: messageUser(${companion})"></a>
+            </h2>
+            <div class="panel panel-default" th:each="m : ${messages}">
+                <div class="panel-heading">
+                    <div class="card">
+                        <a th:replace="template.html :: messageUser(${m.sender})"></a>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="message-left" th:value="${#temporals.format(m.time, 'dd.MM.yyyy')}">22.11.2018 12:25</div>
+                    <div class="message-left" th:text="${m.message}">Hello! How are you?</div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    New message
+                </div>
+                <div class="panel-body">
+                    <form method="post">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" id="comment"></textarea>
+                            <input type="hidden" name="to" value="2" >
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="submit" value="Send &raquo" class="btn btn-success"/></label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+</div>
+
+<div th:replace="template.html :: footer"></div>
+
+</body>
+</html>

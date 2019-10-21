@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="template.html :: header('Messages', false)"></head>
+
+<body th:with="sessionUser=${session.user}">
+
+<div th:replace="template.html :: navbar" ></div>
+<hr/>
+
+<div class="container">
+    <div class="row">
+        <div th:replace="template.html :: menu" ></div>
+
+        <div class="col-md-9">
+            <h2>Messages</h2>
+
+            <div class="panel panel-default" th:each="m : ${recentMessages}">
+                <div class="panel-heading">
+                    <div class="card">
+                        <a th:replace="template.html :: messageUser(${m.sender})"></a>
+                        to &nbsp;
+                        <a th:replace="template.html :: messageUser(${m.receiver})"></a>
+                    </div>
+                </div>
+                <div class="panel-body"><a th:href="@{'/user/conversation/' + ${m.companionId}}" th:text="${m.message}">Hello! How are you?</a></div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+</div>
+
+<div th:replace="template.html :: footer"></div>
+
+</body>
+</html>
