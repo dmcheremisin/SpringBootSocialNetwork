@@ -36,9 +36,7 @@
                                 </tr>
                                 <tr th:if="${sessionUser.id != user.id}">
                                     <td>
-                                        <form method="post" action="/friends">
-                                            <button class="btn btn-info" type="submit" >Send message</button>
-                                        </form>
+                                        <a th:href="@{'/user/conversation/' + ${user.id}}" href="#" class="btn btn-info">Message</a>
                                     </td>
                                 </tr>
                             </table>
