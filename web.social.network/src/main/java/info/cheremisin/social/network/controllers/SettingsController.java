@@ -57,12 +57,11 @@ public class SettingsController {
     }
 
     @PostMapping("/settings")
-    public void updateSettings(HttpServletRequest request, HttpServletResponse response,
-                               @ModelAttribute("user") UserDTO user) throws IOException {
+    public String updateSettings(HttpServletRequest request, @ModelAttribute("user") UserDTO user)  {
         userService.updateUser(user);
 
         request.getSession().setAttribute("user", userService.getUserByEmail(user.getEmail()));
-        response.sendRedirect(request.getContextPath() + "/user/settings");
+        return "redirect:/user/settings";
     }
 
     @PostMapping("/updatePassword")

@@ -12,6 +12,10 @@ public interface FriendshipRepository extends CrudRepository<Friendship, Long> {
 
     List<Friendship> findAllByUserSenderIdOrUserReceiverId(Long userSenderId, Long userReceiverId);
 
+    @Query("SELECT f from Friendship f WHERE (f.userSender.id = :userId OR f.userReceiver.id = :userId) " +
+            "AND f.accepted = true")
+    List<Friendship> findAcceptedFriendshipUsers(Long userId);
+
     @Modifying(clearAutomatically = true)
     @Query("DELETE FROM Friendship f WHERE (f.userSender = :user AND f.userReceiver = :friend) " +
             "OR (f.userSender = :friend AND f.userReceiver = :user)")

@@ -88,7 +88,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="profile-block" th:if="${sessionUser.id == user.id}">
+            <div class="profile-block" th:if="${sessionUser.id == user.id && recentMessage != null }">
                 <h3>Recent Message:</h3>
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -105,12 +105,13 @@
                     </div>
                 </div>
             </div>
-            <div class="profile-block">
-                <h3>Your friends:</h3>
+            <div class="profile-block" th:if="${not #lists.isEmpty(friends)}">
+                <h3>Friends:</h3>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <a class="profile-friend" href="profile.html"><img class="img-circle img-thumbnail img-message" src="./img/2.png" />Cersei</a>
-                        <a class="profile-friend" href="profile.html"><img class="img-circle img-thumbnail img-message" src="./img/3.jpeg"/>Jaime</a>
+                        <span th:each="friend : ${friends}">
+                            <a th:replace="template.html :: messageUser(${friend})"></a>
+                        </span>&nbsp;
                     </div>
                 </div>
             </div>

@@ -70,6 +70,15 @@ public class FriendsServiceImpl implements FriendsService {
         return map;
     }
 
+    public Set<UserDTO> getAcceptedFriendshipUsers(Long id) {
+        List<Friendship> friends = friendshipRepository.findAcceptedFriendshipUsers(id);
+        Set<UserDTO> set = friends.stream()
+                .map(r -> r.getUserSender().getId().equals(id) ? r.getUserReceiver() : r.getUserSender())
+                .map(u -> userToUserDtoConverter.convert(u))
+                .collect(Collectors.toSet());
+        return set;
+    }
+
     @Override
     @Transactional
     public void deleteFriendship(UserDTO userDTO, Long friendId) {
@@ -105,4 +114,6 @@ public class FriendsServiceImpl implements FriendsService {
         User friend = userDtoToUserConverter.convert(friendDTO);
         return friendshipRepository.checkFriendshipExists(user, friend);
     }
+
+
 }

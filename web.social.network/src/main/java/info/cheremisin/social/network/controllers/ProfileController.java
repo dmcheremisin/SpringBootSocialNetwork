@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Set;
 
 import static info.cheremisin.social.network.utils.ServerUtils.getUserFromSession;
 
@@ -38,6 +39,8 @@ public class ProfileController {
         model.addAttribute("user", user);
         MessageDTO recentMessage = messagesService.getRecentMessage(user.getId());
         model.addAttribute("recentMessage", recentMessage);
+        Set<UserDTO> friends = friendsService.getAcceptedFriendshipUsers(user.getId());
+        model.addAttribute("friends", friends);
         return "profile";
     }
 
@@ -45,13 +48,14 @@ public class ProfileController {
     public String getUserPage(@PathVariable Long id, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
         UserDTO sessionUser = getUserFromSession(request);
         if(sessionUser.getId().equals(id)) {
-            response.sendRedirect("/user/profile");
-            return null;
+            return "redirect:/user/profile";
         }
         UserDTO user = userService.getUserById(id);
+        Set<UserDTO> friends = friendsService.getAcceptedFriendshipUsers(id);
         Boolean friendship = friendsService.checkFriendship(sessionUser, user);
         model.addAttribute("user", user);
         model.addAttribute("usersHaveFriendship", friendship);
+        model.addAttribute("friends", friends);
         return "profile";
     }
 }

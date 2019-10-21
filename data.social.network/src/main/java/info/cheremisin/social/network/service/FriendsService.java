@@ -9,6 +9,8 @@ public interface FriendsService {
 
     Map<String, Set<UserDTO>> getFriends(Long userId, String search);
 
+    Set<UserDTO> getAcceptedFriendshipUsers(Long id);
+
     void deleteFriendship(UserDTO userDTO, Long friendId);
 
     void acceptFriendship(UserDTO userDTO, Long friendId);
