@@ -34,7 +34,7 @@
                             <a th:replace="template.html :: profileImage(${user})"></a>
                         </td>
                         <td>
-                            <button class="btn btn-info">Message</button>
+                            <a th:href="@{'/user/conversation/' + ${user.id}}" href="#" class="btn btn-info">Message</a>
                         </td>
                         <td></td>
                         <td></td>
@@ -56,7 +56,7 @@
                             <a class="btn btn-danger" th:href="@{'/user/friends/' + ${user.id} + '/decline'}">Decline</a>
                         </td>
                         <td>
-                            <button class="btn btn-info">Message</button>
+                            <a th:href="@{'/user/conversation/' + ${user.id}}" href="#" class="btn btn-info">Message</a>
                         </td>
                     </tr>
                 </table>
@@ -69,7 +69,7 @@
                         <td>
                             <a th:replace="template.html :: profileImage(${user})"></a>
                         <td>
-                            <button class="btn btn-info">Message</button>
+                        <a th:href="@{'/user/conversation/' + ${user.id}}" href="#" class="btn btn-info">Message</a>
                         </td>
                         <td>
                             <a class="btn btn-danger" th:href="@{'/user/friends/' + ${user.id} + '/decline'}">Remove</a>

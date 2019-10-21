@@ -35,7 +35,7 @@
                             <br/><span th:text="${#temporals.format(user.dob, 'dd.MM.yyyy') + ', ' + user.sex}">23.05.1986, Female</span>
                         </td>
                         <td>
-                            <a th:href="@{/user/messages(companion=${user.id})}" href="#" class="btn btn-info">Message</a>
+                            <a th:href="@{'/user/conversation/' + ${user.id}}" href="#" class="btn btn-info">Message</a>
                         </td>
                     </tr>
                 </table>

@@ -39,24 +39,24 @@ public class FriendsController {
     }
 
     @GetMapping("/{friendId}/decline")
-    public void deleteFriendship(@PathVariable Long friendId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String deleteFriendship(@PathVariable Long friendId, HttpServletRequest request) {
         UserDTO user = getUserFromSession(request);
         friendsService.deleteFriendship(user, friendId);
-        response.sendRedirect(request.getContextPath() + "/user/friends");
+        return "redirect:/user/friends";
     }
 
     @GetMapping("/{friendId}/accept")
-    public void acceptFriendship(@PathVariable Long friendId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String acceptFriendship(@PathVariable Long friendId, HttpServletRequest request) {
         UserDTO user = getUserFromSession(request);
         friendsService.acceptFriendship(user, friendId);
-        response.sendRedirect(request.getContextPath() + "/user/friends");
+        return "redirect:/user/friends";
     }
 
     @GetMapping("/{friendId}/addToFriends")
-    public void addToFriends(@PathVariable Long friendId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String addToFriends(@PathVariable Long friendId, HttpServletRequest request) {
         UserDTO user = getUserFromSession(request);
         friendsService.addToFriends(user, friendId);
-        response.sendRedirect(request.getContextPath() + "/user/friends");
+        return "redirect:/user/friends";
     }
 
 }

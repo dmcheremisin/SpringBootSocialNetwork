@@ -85,7 +85,7 @@ public class SettingsController {
     }
 
     @PostMapping("/uploadImage")
-    public void uploadImage(MultipartHttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String uploadImage(MultipartHttpServletRequest request) throws IOException {
         MultipartFile multipartFile = request.getFile("imagefile");
         String contentType = multipartFile.getContentType();
         if(!allowedExtensions.contains(contentType)) {
@@ -96,7 +96,7 @@ public class SettingsController {
 
         String newFileName = imageService.updateProfileImage(user, multipartFile);
         userService.updateUserImage(user, newFileName);
-        response.sendRedirect(request.getContextPath() + "/user/settings");
+        return "redirect:/user/settings";
     }
 
 }
