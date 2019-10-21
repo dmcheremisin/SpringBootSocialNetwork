@@ -32,10 +32,14 @@
                     New message
                 </div>
                 <div class="panel-body">
-                    <form method="post">
+                    <form th:action="@{'/user/conversation/{id}'(id=${companion.id})}" th:object="${newMessage}" method="POST">
                         <div class="form-group">
-                            <textarea class="form-control" rows="5" id="comment"></textarea>
-                            <input type="hidden" name="to" value="2" >
+                            <textarea class="form-control" rows="5" id="comment" th:field="*{message}"></textarea>
+                            <div th:if="${#fields.hasErrors('message')}" style="margin-bottom: 25px" class="text-danger">
+                                <ul>
+                                    <li th:each="err : ${#fields.errors('message')}" th:text="${err}" />
+                                </ul>
+                            </div>
                         </div>
                         <div class="form-group">
                             <input type="submit" name="submit" value="Send &raquo" class="btn btn-success"/></label>

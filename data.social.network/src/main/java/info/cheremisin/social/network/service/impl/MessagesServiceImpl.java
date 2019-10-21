@@ -1,5 +1,6 @@
 package info.cheremisin.social.network.service.impl;
 
+import info.cheremisin.social.network.converters.MessageDtoToMessageConverter;
 import info.cheremisin.social.network.converters.MessageToMessageDtoConverter;
 import info.cheremisin.social.network.dto.MessageDTO;
 import info.cheremisin.social.network.entities.Message;
@@ -14,19 +15,22 @@ import java.util.*;
 public class MessagesServiceImpl implements MessagesService {
 
     private MessageRepository messageRepository;
-    private MessageToMessageDtoConverter messageConverter;
+    private MessageToMessageDtoConverter messageToMessageDtoConverter;
+    private MessageDtoToMessageConverter messageDtoToMessageConverter;
 
     public MessagesServiceImpl(MessageRepository messageRepository,
-                               MessageToMessageDtoConverter messageConverter) {
+                               MessageToMessageDtoConverter messageToMessageDtoConverter,
+                               MessageDtoToMessageConverter messageDtoToMessageConverter) {
         this.messageRepository = messageRepository;
-        this.messageConverter = messageConverter;
+        this.messageToMessageDtoConverter = messageToMessageDtoConverter;
+        this.messageDtoToMessageConverter = messageDtoToMessageConverter;
     }
 
     public Collection<MessageDTO> findAllRecentMessages(Long id) {
         Iterable<Message> all = messageRepository.findAllRecentMessages(id);
         Map<User, MessageDTO> map = new HashMap<>();
         all.forEach(m -> {
-            MessageDTO messageDTO = messageConverter.convert(m, id);
+            MessageDTO messageDTO = messageToMessageDtoConverter.convert(m, id);
             User user = m.getSender().getId().equals(id) ? m.getReceiver() : m.getSender();
             map.put(user, messageDTO);
         });
@@ -37,15 +41,21 @@ public class MessagesServiceImpl implements MessagesService {
     public List<MessageDTO> findConversation(Long userId, Long companionId) {
         List<Message> all = messageRepository.findConversation(userId, companionId);
         List<MessageDTO> messages = new LinkedList<>();
-        all.forEach(m -> messages.add(messageConverter.convert(m, userId)));
+        all.forEach(m -> messages.add(messageToMessageDtoConverter.convert(m, userId)));
         return messages;
     }
 
     @Override
     public MessageDTO getRecentMessage(Long id) {
         Message message = messageRepository.findFirstBySenderIdOrReceiverIdOrderByIdDesc(id, id);
-        MessageDTO messageDTO = messageConverter.convert(message, id);
+        MessageDTO messageDTO = messageToMessageDtoConverter.convert(message, id);
         return messageDTO;
+    }
+
+    @Override
+    public void postMessage(MessageDTO messageDTO) {
+        Message message = messageDtoToMessageConverter.convert(messageDTO);
+        messageRepository.save(message);
     }
 
 

@@ -11,4 +11,6 @@ public interface MessagesService {
     List<MessageDTO> findConversation(Long userId, Long companionId);
 
     MessageDTO getRecentMessage(Long id);
+
+    void postMessage(MessageDTO messageDTO);
 }

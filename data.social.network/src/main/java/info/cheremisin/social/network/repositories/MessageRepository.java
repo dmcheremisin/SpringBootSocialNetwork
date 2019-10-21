@@ -16,6 +16,5 @@ public interface MessageRepository extends CrudRepository<Message, Long> {
             "(m.sender.id = :companionId AND m.receiver.id = :userId) ORDER BY m.time")
     List<Message> findConversation(Long userId, Long companionId);
 
-    //@Query(value="SELECT m FROM Message m WHERE m.id = :id ORDER BY m.time DESC LIMIT 1")
-    Message findFirstBySenderIdOrReceiverIdOrderByIdDesc(Long id, Long id1);
+    Message findFirstBySenderIdOrReceiverIdOrderByIdDesc(Long userId, Long theSameUserId);
 }
