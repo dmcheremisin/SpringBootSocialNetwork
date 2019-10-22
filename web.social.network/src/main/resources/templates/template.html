@@ -24,7 +24,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" th:href="@{/}" >Social Network</a>
+            <a class="navbar-brand" th:href="@{/}" th:text="#{header}">Social Network</a>
         </div>
         <div class="navbar-collapse collapse">
             <form th:if="${session.user == null}" action="#" th:action="@{/authenticateUser}" method="POST" class="navbar-form navbar-right">
@@ -34,14 +34,14 @@
                 <div class="form-group">
                     <input name="password" type="password" placeholder="Password" class="form-control login_password">
                 </div>
-                <button type="submit" class="btn btn-success login_submit">Вход</button>
+                <button type="submit" class="btn btn-success login_submit" th:text="#{login}">Вход</button>
             </form>
             <form th:if="${session.user != null}" th:action="@{/logout}" method="POST" class="navbar-form navbar-right">
-                <button type="submit" class="btn btn-success">Выход</button>
+                <button type="submit" class="btn btn-success" th:text="#{logout}">Выход</button>
             </form>
-            <div class="navbar-right">
-                <a href="#" class="navbar-brand lang">Ru</a>
-                <a href="#" class="navbar-brand lang langSelected">En</a>
+            <div class="navbar-right" >
+                <a th:href="@{?(lang=ru)}" class="navbar-brand lang" th:text="#{russian}">Ru</a>
+                <a th:href="@{?(lang=en)}" class="navbar-brand lang" th:text="#{english}">En</a>
             </div>
         </div>
     </div>
@@ -50,17 +50,17 @@
 
 <div class="jumbotron" th:fragment="jumbotron">
     <div class="container">
-        <h1>Social network facilities:</h1>
+        <h1 th:text="#{index.intro}">Social network facilities:</h1>
         <ul class="list-inline">
-            <li>&bull; Registration</li>
-            <li>&bull; Authorization</li>
-            <li>&bull; Profile view and change</li>
-            <li>&bull; User search</li>
-            <li>&bull; Friends</li>
-            <li>&bull; Messages</li>
+            <li>&bull; <span th:text="#{index.registration}">Registration</span></li>
+            <li>&bull; <span th:text="#{index.registration}">Authorization</span></li>
+            <li>&bull; <span th:text="#{index.profile}">Profile view and change</span></li>
+            <li>&bull; <span th:text="#{index.user.search}">User search</span></li>
+            <li>&bull; <span th:text="#{index.friends}">Friends</span></li>
+            <li>&bull; <span th:text="#{index.messages}">Messages</span></li>
         </ul>
         <hr/>
-        <p>Join social network and become a member with full capabilities!</p>
+        <p th:text="#{index.join.today}">Join social network and become a member with full capabilities!</p>
     </div>
 </div>
 
@@ -71,14 +71,14 @@
 
             <div class="panel panel-default ">
                 <div class="panel-heading">
-                    <h3 class="panel-title">User menu</h3>
+                    <h3 class="panel-title" th:text="#{menu.user.menu}">User menu</h3>
                 </div>
                 <div class="list-group">
-                    <a th:href="@{/user/profile}" class="list-group-item">Profile</a>
-                    <a th:href="@{/user/messages}" class="list-group-item">Messages</a>
-                    <a th:href="@{/user/friends}" class="list-group-item">Friends</a>
-                    <a th:href="@{/user/users}" class="list-group-item">Users</a>
-                    <a th:href="@{/user/settings}" class="list-group-item">Settings</a>
+                    <a th:href="@{/user/profile}" class="list-group-item" th:text="#{menu.profile}">Profile</a>
+                    <a th:href="@{/user/messages}" class="list-group-item" th:text="#{menu.messages}">Messages</a>
+                    <a th:href="@{/user/friends}" class="list-group-item" th:text="#{menu.friends}">Friends</a>
+                    <a th:href="@{/user/users}" class="list-group-item" th:text="#{menu.users}">Users</a>
+                    <a th:href="@{/user/settings}" class="list-group-item" th:text="#{menu.settings}">Settings</a>
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
 <div class="container" th:fragment="footer">
     <footer >
         <footer>
-            <p>&copy; All rights reserved</p>
+            <p th:text="#{footer.copyright}">&copy; All rights reserved</p>
         </footer>
     </footer>
 
