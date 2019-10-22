@@ -13,7 +13,7 @@
         <div th:replace="template.html :: menu" ></div>
 
         <div class="col-md-9">
-            <h2>Conversation with
+            <h2><span th:text="#{conversation.with}">Conversation with</span>
                 <a th:replace="template.html :: messageUser(${companion})"></a>
             </h2>
             <div class="panel panel-default" th:each="m : ${messages}">
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <div class="panel-heading" th:text="#{conversation.new}">
                     New message
                 </div>
                 <div class="panel-body">
@@ -42,7 +42,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="submit" name="submit" value="Send &raquo" class="btn btn-success"/></label>
+                            <button type="submit" name="submit" class="btn btn-success" >
+                                <span th:text="#{conversation.send}">Send</span> &raquo
+                            </button>
                         </div>
                     </form>
                 </div>

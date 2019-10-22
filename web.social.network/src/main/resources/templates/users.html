@@ -27,7 +27,7 @@
             </div>
 
             <div class="friends-top">
-                <h3>Users:</h3>
+                <h3 th:text="#{users.header}">Users:</h3>
                 <table class="table users">
                     <tr th:each="user : ${page.content}">
                         <td>
@@ -35,7 +35,7 @@
                             <br/><span th:text="${#temporals.format(user.dob, 'dd.MM.yyyy') + ', ' + user.sex}">23.05.1986, Female</span>
                         </td>
                         <td>
-                            <a th:href="@{'/user/conversation/' + ${user.id}}" href="#" class="btn btn-info">Message</a>
+                            <a th:href="@{'/user/conversation/' + ${user.id}}" href="#" class="btn btn-info" th:text="#{message}">Message</a>
                         </td>
                     </tr>
                 </table>
@@ -43,20 +43,22 @@
                     <nav>
                         <ul class="pagination">
                             <li class="page-item" th:classappend="${page.hasPrevious} ? '' : 'disabled'">
-                                <a th:if="${page.hasPrevious}" class="page-link" th:href="@{/user/users(page=${page.currentPage - 1}, search=${search})}">
+                                <a th:if="${page.hasPrevious}" class="page-link"
+                                   th:href="@{/user/users(page=${page.currentPage - 1}, search=${search})}" th:text="#{previous}">
                                     Previous
                                 </a>
-                                <a th:if="${!page.hasPrevious}" class="page-link" href="#" >Previous</a>
+                                <a th:if="${!page.hasPrevious}" class="page-link" href="#" th:text="#{previous}">Previous</a>
                             </li>
                             <li class="page-item" th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}"
                                 th:classappend="${i == page.currentPage} ? 'active' : '' " >
                                 <a class="page-link" th:href="@{/user/users(page=${i}, search=${search})}" th:text="${i+1}">1</a>
                             </li>
                             <li class="page-item" th:classappend="${page.hasNext} ? '' : 'disabled'">
-                                <a th:if="${page.hasNext}" class="page-link" th:href="@{/user/users(page=${page.currentPage + 1}, search=${search})}">
+                                <a th:if="${page.hasNext}" class="page-link"
+                                   th:href="@{/user/users(page=${page.currentPage + 1}, search=${search})}" th:text="#{next}">
                                     Next
                                 </a>
-                                <a th:if="${!page.hasNext}" class="page-link" href="#" >Next</a>
+                                <a th:if="${!page.hasNext}" class="page-link" href="#" th:text="#{next}">Next</a>
                             </li>
                         </ul>
                     </nav>

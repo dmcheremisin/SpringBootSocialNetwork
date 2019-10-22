@@ -27,14 +27,14 @@
             </div>
 
             <div class="friends-top">
-                <h3>Your requests</h3>
+                <h3 th:text="#{friends.your.requests}">Your requests</h3>
                 <table class="table friends">
                     <tr th:each="user : ${usersNotAcceptedRequests}">
                         <td>
                             <a th:replace="template.html :: profileImage(${user})"></a>
                         </td>
                         <td>
-                            <a th:href="@{'/user/conversation/' + ${user.id}}" href="#" class="btn btn-info">Message</a>
+                            <a th:href="@{'/user/conversation/' + ${user.id}}" href="#" class="btn btn-info" th:text="#{message}">Message</a>
                         </td>
                         <td></td>
                         <td></td>
@@ -43,36 +43,36 @@
             </div>
 
             <div class="friends-top">
-                <h3>Friends requests to you</h3>
+                <h3 th:text="#{friends.requests}">Friends requests to you</h3>
                 <table class="table friends">
                     <tr th:each="user : ${notAcceptedRequestsToUser}">
                         <td>
                             <a th:replace="template.html :: profileImage(${user})"></a>
                         </td>
                         <td>
-                            <a class="btn btn-success" th:href="@{'/user/friends/' + ${user.id} + '/accept'}">Accept</a>
+                            <a class="btn btn-success" th:href="@{'/user/friends/' + ${user.id} + '/accept'}" th:text="#{friends.accept}">Accept</a>
                         </td>
                         <td>
-                            <a class="btn btn-danger" th:href="@{'/user/friends/' + ${user.id} + '/decline'}">Decline</a>
+                            <a class="btn btn-danger" th:href="@{'/user/friends/' + ${user.id} + '/decline'}" th:text="#{friends.decline}">Decline</a>
                         </td>
                         <td>
-                            <a th:href="@{'/user/conversation/' + ${user.id}}" href="#" class="btn btn-info">Message</a>
+                            <a th:href="@{'/user/conversation/' + ${user.id}}" href="#" class="btn btn-info" th:text="#{message}">Message</a>
                         </td>
                     </tr>
                 </table>
             </div>
 
             <div class="friends-top">
-                <h3>Your friends</h3>
+                <h3 th:text="#{friends.your}">Your friends</h3>
                 <table class="table friends">
                     <tr th:each="user : ${friendsOfUser}">
                         <td>
                             <a th:replace="template.html :: profileImage(${user})"></a>
                         <td>
-                        <a th:href="@{'/user/conversation/' + ${user.id}}" href="#" class="btn btn-info">Message</a>
+                        <a th:href="@{'/user/conversation/' + ${user.id}}" href="#" class="btn btn-info" th:text="#{message}">Message</a>
                         </td>
                         <td>
-                            <a class="btn btn-danger" th:href="@{'/user/friends/' + ${user.id} + '/decline'}">Remove</a>
+                            <a class="btn btn-danger" th:href="@{'/user/friends/' + ${user.id} + '/decline'}" th:text="#{friends.remove}">Remove</a>
                         </td>
                     </tr>
                 </table>

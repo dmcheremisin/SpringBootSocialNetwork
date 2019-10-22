@@ -13,15 +13,15 @@
         <div th:replace="template.html :: menu" ></div>
 
         <div class="col-md-9">
-            <h2>Your avatar.</h2>
+            <h2 th:text="#{settings.avatar}">Your avatar.</h2>
             <div class="profile-block">
                 <div>
                     <div class="image-drop border-dotted" ondrop="dragAndDrop(event)" ondragover="dragEnter(event)"
                          ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
-                        <p class="drop-text">Drop your image here.</p>
+                        <p class="drop-text" th:text="#{settings.drop.image}">Drop your image here.</p>
                     </div>
                     <div class="btn-vertical">
-                        <button class="btn btn-lg btn-success btn-left">Update avatar</button>
+                        <button class="btn btn-lg btn-success btn-left" th:text="#{settings.update.avatar}">Update avatar</button>
                     </div>
                     <div class="image-right">
                         <div class="card">
@@ -34,45 +34,47 @@
                 </div>
             </div>
             <div class="profile-block">
-                <h2>Your profile.</h2>
+                <h2 th:text="#{settings.your.profile}">Your profile.</h2>
                 <form th:action="@{/user/settings}" th:object="${user}" action="/user/settings" method="post">
                     <div class="panel panel-default">
                         <div class="list-group">
                             <div class="list-group-item">
-                                <label for="email">Email: <input type="text" name="email" class="form-control"
+                                <label for="email"><span th:text="#{email}">Email</span>: <input type="text" name="email" class="form-control"
                                                                  th:value="${user.email}"
                                                                  id="email" readonly />
                                 </label>
                             </div>
                             <div class="list-group-item">
-                                <label for="firstName">First name: <input type="text" name="firstName" class="form-control"
+                                <label for="firstName"><span th:text="#{firstName}">First name</span>: <input type="text" name="firstName" class="form-control"
                                                                           th:value="${user.firstName}"
                                                                           id="firstName"/>
                                 </label>
                             </div>
                             <div class="list-group-item">
-                                <label for="lastName">Last name: <input type="text" name="lastName" class="form-control"
+                                <label for="lastName"><span th:text="#{lastName}">Last name</span>: <input type="text" name="lastName" class="form-control"
                                                                         th:value="${user.lastName}"
                                                                         id="lastName"/>
                                 </label>
                             </div>
                             <div class="list-group-item">
-                                <label for="datepicker">Birth date:
+                                <label for="datepicker"><span th:text="#{birth.date}">Birth date</span>:
                                     <input type="text" size="30" class="form-control" name="dob"
                                            th:value="${#temporals.format(user.dob, 'dd.MM.yyyy')}"
                                            id="datepicker">
                                 </label>
                             </div>
-                            <div class="list-group-item"> Gender:
+                            <div class="list-group-item"><span th:text="#{gender}">Gender</span>:
                                 <label class="radio-inline">
-                                    <input type="radio" name="sex" value="Male" th:checked="${user.sex.equals('Male')}">Male
+                                    <input type="radio" name="sex" value="Male" th:checked="${user.sex.equals('Male')}">
+                                    <span th:text="#{gender.male}">Male</span>
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="sex"  value="Female" th:checked="${user.sex.equals('Female')}">Female
+                                    <input type="radio" name="sex"  value="Female" th:checked="${user.sex.equals('Female')}">
+                                    <span th:text="#{gender.female}">Female</span>
                                 </label>
                             </div>
                             <div class="list-group-item">
-                                <label for="phone">Phone: <input type="text" name="phone" class="form-control"
+                                <label for="phone"><span th:text="#{phone}">Phone</span>: <input type="text" name="phone" class="form-control"
                                                                  th:value="${user.phone}"
                                                                  id="phone"/>
                                 </label>
@@ -80,7 +82,7 @@
                         </div>
                         <input type="hidden" name="id" th:value="${user.id}" />
                     </div>
-                    <button type="submit" class="btn btn-lg btn-success">Change profile</button>
+                    <button type="submit" class="btn btn-lg btn-success"><span th:text="#{settings.change.profile}">Change profile</span></button>
                 </form>
             </div>
             <div class="profile-block">
@@ -89,13 +91,15 @@
                     <div class="panel panel-default">
                         <div class="list-group">
                             <div class="list-group-item">
-                                <label for="oldPassword">Old Password: <input type="password"
-                                                                              name="oldPassword"
-                                                                              class="form-control"
-                                                                              id="oldPassword"/>
+                                <label for="oldPassword">
+                                    <span th:text="#{settings.old.password}">Old Password</span>:
+                                    <input type="password"
+                                           name="oldPassword"
+                                           class="form-control"
+                                           id="oldPassword"/>
                                 </label>
                                 <div th:if="${passwordError}" style="margin-bottom: 10px" class="text-danger">
-                                    <p>You entered wrong old password</p>
+                                    <p th:text="#{provide.pas.conf}">You entered wrong old password</p>
                                 </div>
                                 <div th:if="${#fields.hasErrors('oldPassword')}" style="margin-bottom: 10px" class="text-danger">
                                     <ul>
@@ -104,10 +108,12 @@
                                 </div>
                             </div>
                             <div class="list-group-item">
-                                <label for="password">New Password: <input type="password"
-                                                                           name="password"
-                                                                           class="form-control"
-                                                                           id="password"/>
+                                <label for="password">
+                                    <span th:text="#{settings.new.password}">New Password</span>:
+                                    <input type="password"
+                                           name="password"
+                                           class="form-control"
+                                           id="password"/>
                                 </label>
                                 <div th:if="${#fields.hasErrors('password')}" style="margin-bottom: 10px" class="text-danger">
                                     <ul>
@@ -116,10 +122,12 @@
                                 </div>
                             </div>
                             <div class="list-group-item">
-                                <label for="passwordConfirmation">Repeat Password: <input type="password"
-                                                                                    name="passwordConfirmation"
-                                                                                    class="form-control"
-                                                                                    id="passwordConfirmation"/>
+                                <label for="passwordConfirmation">
+                                    <span th:text="#{settings.repeat.password}">Repeat Password</span>:
+                                    <input type="password"
+                                           name="passwordConfirmation"
+                                           class="form-control"
+                                           id="passwordConfirmation"/>
                                 </label>
                                 <div th:if="${#fields.hasErrors('passwordConfirmation')}" style="margin-bottom: 10px" class="text-danger">
                                     <ul>
@@ -129,7 +137,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-lg btn-success">Change password</button>
+                    <button type="submit" class="btn btn-lg btn-success" th:text="#{settings.change.password}">Change password</button>
                 </form>
             </div>
         </div>

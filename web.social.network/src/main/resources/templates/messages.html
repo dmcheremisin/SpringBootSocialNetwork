@@ -13,13 +13,13 @@
         <div th:replace="template.html :: menu" ></div>
 
         <div class="col-md-9">
-            <h2>Messages</h2>
+            <h2 th:text="#{messages.messages}">Messages</h2>
 
             <div class="panel panel-default" th:each="m : ${recentMessages}">
                 <div class="panel-heading">
                     <div class="card">
                         <a th:replace="template.html :: messageUser(${m.sender})"></a>
-                        to &nbsp;
+                        <span th:text="#{to}">to</span> &nbsp;
                         <a th:replace="template.html :: messageUser(${m.receiver})"></a>
                     </div>
                 </div>

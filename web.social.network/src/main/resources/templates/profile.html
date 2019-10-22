@@ -44,7 +44,7 @@
                         <td class="profile-info">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3>Profile Info</h3>
+                                    <h3 th:text="#{profile.info}">Profile</h3>
                                 </div>
                                 <div class="list-group">
                                     <p class="list-group-item">First name: <span th:text="${user.firstName}">Tyron</span></p>
@@ -61,7 +61,7 @@
                         <td>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Admin menu</h3>
+                                    <h3 class="panel-title" th:text="#{profile.admin.menu}">Admin menu</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="message-left">
@@ -69,7 +69,7 @@
                                             <input type="hidden" name="userId" value="${profileUser.id}">
                                             <input type="hidden" name="action" value="unblock">
                                             <button class="btn btn-success" name="companion" value="${profileUser.id}"
-                                                    type="submit">Make Admin
+                                                    type="submit" th:text="#{profile.make.admin}">Make Admin
                                             </button>
                                         </form>
                                     </div>
@@ -78,7 +78,7 @@
                                             <input type="hidden" name="userId" value="${profileUser.id}">
                                             <input type="hidden" name="action" value="unblock">
                                             <button class="btn btn-danger" name="companion" value="${profileUser.id}"
-                                                    type="submit">Block user
+                                                    type="submit" th:text="#{profile.block}">Block
                                             </button>
                                         </form>
                                     </div>
@@ -89,7 +89,7 @@
                 </table>
             </div>
             <div class="profile-block" th:if="${sessionUser.id == user.id && recentMessage != null }">
-                <h3>Recent Message:</h3>
+                <h3 th:text="#{profile.recent.message}">Recent Message:</h3>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="card">
@@ -106,7 +106,7 @@
                 </div>
             </div>
             <div class="profile-block" th:if="${not #lists.isEmpty(friends)}">
-                <h3>Friends:</h3>
+                <h3 th:text="#{profile.friends}">Friends:</h3>
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <span th:each="friend : ${friends}">
