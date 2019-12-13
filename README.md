@@ -9,4 +9,4 @@
 - H2
 
 ## Application demo is available on Heroku  
-Link: TBD
+Link: [https://springboot-social-network.herokuapp.com/](https://springboot-social-network.herokuapp.com/)
