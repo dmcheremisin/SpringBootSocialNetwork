@@ -59,6 +59,7 @@
     </dependencies>
 
     <build>
+        <finalName>social-network</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

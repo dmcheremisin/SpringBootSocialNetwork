@@ -1,0 +1,1 @@
+web: java -jar web.social.network/target/social-network.jar
