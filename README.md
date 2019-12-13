@@ -7,3 +7,6 @@
 - Thymeleaf
 - Spring Security
 - H2
+
+## Application demo is available on Heroku  
+Link: TBD
