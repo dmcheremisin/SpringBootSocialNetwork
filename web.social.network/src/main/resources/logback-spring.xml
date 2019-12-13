@@ -1,0 +1,30 @@
+<configuration scan="true">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <File>logs/application.log</File>
+    </appender>
+
+    <logger name="info.cheremisin" level="DEBUG"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.springframework.boot.context.config" level="INFO"/>
+    <logger name="org.hibernate.SQL" level="debug"/>
+    <logger name="org.hibernate.type" level="off"/>
+    <logger name="org.hibernate.type.descriptor.sql" level="off"/>
+    <logger name="org.hibernate.stat" level="off"/>
+    <logger name="org.hibernate.cache" level="off"/>
+    <logger name="org.hibernate.jdbc" level="off"/>
+    <logger name="org.hibernate.hql" level="off"/>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>
