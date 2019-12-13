@@ -1,4 +1,4 @@
-# SpringBootSocialNetwork
+# SpringBoot Social Network
 
 ## Tech stack:
 - Java 8
