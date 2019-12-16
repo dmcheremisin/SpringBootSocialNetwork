@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar web.social.network/target/social-network.jar
+web: java -Dspring.profiles.active=prod -Dserver.port=$PORT $JAVA_OPTS -jar web.social.network/target/social-network.jar
