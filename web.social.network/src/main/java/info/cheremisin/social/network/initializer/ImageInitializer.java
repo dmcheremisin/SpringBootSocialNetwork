@@ -4,7 +4,6 @@ import info.cheremisin.social.network.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,6 @@ import java.nio.file.Path;
  * Created by Dmitrii on 06.10.2019.
  */
 @Component
-@Profile({"dev", "qa"})
 public class ImageInitializer implements ApplicationListener<ContextRefreshedEvent> {
     private ImageService imageService;
 
