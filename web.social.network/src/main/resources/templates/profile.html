@@ -47,11 +47,27 @@
                                     <h3 th:text="#{profile.info}">Profile</h3>
                                 </div>
                                 <div class="list-group">
-                                    <p class="list-group-item">First name: <span th:text="${user.firstName}">Tyron</span></p>
-                                    <p class="list-group-item">Last name: <span th:text="${user.lastName}">Lanister</span></p>
-                                    <p class="list-group-item">Birth date: <span th:text="${#temporals.format(user.dob, 'dd.MM.yyyy')}">11.01.1989</span></p>
-                                    <p class="list-group-item">Gender: <span th:text="${user.sex}">Male</span></p>
-                                    <p class="list-group-item">Phone: <span th:text="${user.phone}">+7 999 999 99 99</span></p>
+                                    <p class="list-group-item">
+                                        <span th:text="#{firstName}">First name</span>:
+                                        <span th:text="${user.firstName}">Tyron</span>
+                                    </p>
+                                    <p class="list-group-item">
+                                        <span th:text="#{lastName}">First name</span>:
+                                        <span th:text="${user.lastName}">Lanister</span>
+                                    </p>
+                                    <p class="list-group-item">
+                                        <span th:text="#{birth.date}">Birth date</span>:
+                                        <span th:text="${#temporals.format(user.dob, 'dd.MM.yyyy')}">11.01.1989</span>
+                                    </p>
+                                    <p class="list-group-item">
+                                        <span th:text="#{gender}">Gender</span>:
+                                        <span th:if="${user.sex.equals('Male')}" th:text="#{gender.male}">Male</span>
+                                        <span th:if="${user.sex.equals('Female')}" th:text="#{gender.female}">Female</span>
+                                    </p>
+                                    <p class="list-group-item">
+                                        <span th:text="#{phone}">Phone</span>:
+                                        <span th:text="${user.phone}">+7 999 999 99 99</span>
+                                    </p>
                                 </div>
                             </div>
                         </td>
