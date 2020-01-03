@@ -4,6 +4,7 @@ import info.cheremisin.social.network.dto.MessageDTO;
 import info.cheremisin.social.network.dto.UserDTO;
 import info.cheremisin.social.network.service.MessagesService;
 import info.cheremisin.social.network.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,15 +20,11 @@ import static info.cheremisin.social.network.utils.ServerUtils.getUserFromSessio
 
 @Controller
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class MessagesController {
 
-    private MessagesService messagesService;
-    private UserService userService;
-
-    public MessagesController(MessagesService messagesService, UserService userService) {
-        this.messagesService = messagesService;
-        this.userService = userService;
-    }
+    private final MessagesService messagesService;
+    private final UserService userService;
 
     private void addConversationToModel(Long companionId, HttpServletRequest request, Model model) {
         UserDTO user = getUserFromSession(request);

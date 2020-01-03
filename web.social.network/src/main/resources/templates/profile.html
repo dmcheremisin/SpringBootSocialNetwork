@@ -72,7 +72,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr th:if="${user.isAdmin}">
+                    <tr th:if="${sessionUser.isAdmin}">
                         <td></td>
                         <td>
                             <div class="panel panel-default">
@@ -81,19 +81,17 @@
                                 </div>
                                 <div class="panel-body">
                                     <div class="message-left">
-                                        <form method="post" action="/conversation">
-                                            <input type="hidden" name="userId" value="${profileUser.id}">
-                                            <input type="hidden" name="action" value="unblock">
-                                            <button class="btn btn-success" name="companion" value="${profileUser.id}"
+                                        <form th:action="@{/admin/makeAdmin}" action="/admin/makeAdmin" method="POST">
+                                            <input type="hidden" name="userId" th:value="${user.id}">
+                                            <button class="btn btn-success" name="submit"
                                                     type="submit" th:text="#{profile.make.admin}">Make Admin
                                             </button>
                                         </form>
                                     </div>
                                     <div class="message-left">
-                                        <form method="post" action="/conversation">
-                                            <input type="hidden" name="userId" value="${profileUser.id}">
-                                            <input type="hidden" name="action" value="unblock">
-                                            <button class="btn btn-danger" name="companion" value="${profileUser.id}"
+                                        <form th:action="@{/admin/block}" action="/admin/block" method="POST">
+                                            <input type="hidden" name="userId" th:value="${user.id}">
+                                            <button class="btn btn-danger" name="submit"
                                                     type="submit" th:text="#{profile.block}">Block
                                             </button>
                                         </form>

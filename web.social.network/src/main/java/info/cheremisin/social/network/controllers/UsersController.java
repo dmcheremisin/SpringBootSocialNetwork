@@ -3,6 +3,7 @@ package info.cheremisin.social.network.controllers;
 import info.cheremisin.social.network.dto.PageDTO;
 import info.cheremisin.social.network.dto.UserDTO;
 import info.cheremisin.social.network.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -23,17 +24,13 @@ import static info.cheremisin.social.network.utils.ServerUtils.getUserFromSessio
  */
 @Controller
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UsersController {
 
     @Value("${default.page.size}")
     private Integer defaultPageSize;
 
-    private UserService userService;
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserService userService;
 
     @GetMapping("/users")
     public String getUserList(HttpServletRequest request,
@@ -41,12 +38,12 @@ public class UsersController {
                               @RequestParam(value = "page", required = false) Integer page,
                               Model model) {
         UserDTO user = getUserFromSession(request);
-        if(page == null) {
+        if (page == null)
             page = 0;
-        }
+
         PageRequest pageRequest = PageRequest.of(page, defaultPageSize, Sort.by("lastName").and(Sort.by("firstName")));
         PageDTO<UserDTO> allPageable;
-        if(StringUtils.isEmpty(search)) {
+        if (StringUtils.isEmpty(search)) {
             allPageable = userService.findAllPageable(user.getId(), pageRequest);
         } else {
             allPageable = userService.findAllWithSearch(user.getId(), search, pageRequest);

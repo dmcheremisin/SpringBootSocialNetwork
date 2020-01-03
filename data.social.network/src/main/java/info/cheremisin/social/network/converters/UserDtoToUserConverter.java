@@ -17,9 +17,6 @@ public class UserDtoToUserConverter implements Converter<UserDTO, User> {
 
     @Override
     public User convert(UserDTO userDTO) {
-        if (userDTO == null) {
-            return null;
-        }
         User.UserBuilder builder = User.builder()
                                        .id(userDTO.getId())
                                        .email(userDTO.getEmail())

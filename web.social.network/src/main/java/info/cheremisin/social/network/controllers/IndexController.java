@@ -2,6 +2,7 @@ package info.cheremisin.social.network.controllers;
 
 import info.cheremisin.social.network.dto.UserDTO;
 import info.cheremisin.social.network.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,17 +16,14 @@ import javax.validation.Valid;
 import java.io.IOException;
 
 @Controller
+@RequiredArgsConstructor
 public class IndexController {
 
-    private UserService userService;
-
-    public IndexController(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserService userService;
 
     @GetMapping("/")
     public String indexPage(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
-        if(request.getSession().getAttribute("user") != null) {
+        if (request.getSession().getAttribute("user") != null) {
             response.sendRedirect(request.getContextPath() + "/user/profile");
             return null;
         }
@@ -39,14 +37,15 @@ public class IndexController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("user") UserDTO userDTO, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()) {
+    public String registerUser(@Valid @ModelAttribute("user") UserDTO userDTO, BindingResult bindingResult,
+            Model model) {
+        if (bindingResult.hasErrors()) {
             return "index";
         }
 
         String email = userDTO.getEmail();
         UserDTO userByEmail = userService.getUserByEmail(email);
-        if(userByEmail != null) {
+        if (userByEmail != null) {
             model.addAttribute("registrationError", true);
             model.addAttribute("user", userDTO);
             return "index";

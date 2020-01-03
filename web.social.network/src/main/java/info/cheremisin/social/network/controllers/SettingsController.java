@@ -4,6 +4,7 @@ import info.cheremisin.social.network.dto.PasswordChangeDTO;
 import info.cheremisin.social.network.dto.UserDTO;
 import info.cheremisin.social.network.service.ImageService;
 import info.cheremisin.social.network.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,28 +28,15 @@ import static info.cheremisin.social.network.utils.ServerUtils.getUserFromSessio
 
 @Controller
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class SettingsController {
-    private UserService userService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private ImageService imageService;
+
+    private final UserService userService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ImageService imageService;
 
     @Value("#{'${allowed.file.types}'.split(',')}")
     private Set<String> allowedExtensions;
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    @Autowired
-    public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
-
-    @Autowired
-    public void setImageService(ImageService imageService) {
-        this.imageService = imageService;
-    }
 
     @GetMapping("/settings")
     public String getSettingsPage(Model model) {

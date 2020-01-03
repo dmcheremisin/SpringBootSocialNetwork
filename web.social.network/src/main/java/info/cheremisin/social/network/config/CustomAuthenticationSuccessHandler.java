@@ -22,20 +22,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException {
 
-		System.out.println("\n\nIn customAuthenticationSuccessHandler\n\n");
+		UserDTO userDTO = userService.getUserByEmail(authentication.getName());
+		request.getSession().setAttribute("user", userDTO);
 
-		String userName = authentication.getName();
-		
-		System.out.println("userName=" + userName);
-
-		UserDTO userDTO = userService.getUserByEmail(userName);
-		
-		// now place in the session
-		HttpSession session = request.getSession();
-		session.setAttribute("user", userDTO);
-		
-		// forward to home page
-		
 		response.sendRedirect(request.getContextPath() + "/user/profile");
 	}
 

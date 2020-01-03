@@ -22,4 +22,7 @@ public interface UserService {
 
     void updateUserImage(UserDTO userDTO, String fileName);
 
+    void makeUserAdmin(Long userId);
+
+    void blockUser(Long userId);
 }

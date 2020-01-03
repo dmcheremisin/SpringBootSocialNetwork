@@ -11,6 +11,7 @@ import info.cheremisin.social.network.entities.User;
 import info.cheremisin.social.network.repositories.RoleRepository;
 import info.cheremisin.social.network.repositories.UserRepository;
 import info.cheremisin.social.network.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,27 +20,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
+import static info.cheremisin.social.network.constants.Constants.ROLE_ADMIN;
 import static info.cheremisin.social.network.constants.Constants.ROLE_USER;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private BCryptPasswordEncoder passwordEncoder;
-    private UserToUserDtoConverter userToUserDtoConverter;
-    private UserDtoToUserConverter userDtoToUserConverter;
-    private PageToPageDtoUserConverter pageToPageDtoUserConverter;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final UserToUserDtoConverter userToUserDtoConverter;
+    private final UserDtoToUserConverter userDtoToUserConverter;
+    private final PageToPageDtoUserConverter pageToPageDtoUserConverter;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder,
-                           UserToUserDtoConverter userToUserDtoConverter, UserDtoToUserConverter userDtoToUserConverter,
-                           PageToPageDtoUserConverter pageToPageDtoUserConverter) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.userToUserDtoConverter = userToUserDtoConverter;
-        this.userDtoToUserConverter = userDtoToUserConverter;
-        this.pageToPageDtoUserConverter = pageToPageDtoUserConverter;
+    private static void checkSuperAdmin(User user) {
+        if(user.getId() == 1)
+            throw new RuntimeException("For the user with id = 1 it is not allowed to change roles");
     }
 
     private User getUser(Long id) {
@@ -47,41 +44,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDTO getUserById(Long id) {
         User user = getUser(id);
-        UserDTO userDTO = userToUserDtoConverter.convert(user);
-        return userDTO;
+        return userToUserDtoConverter.convert(user);
     }
 
     @Override
+    @Transactional
     public UserDTO getUserByEmail(String email) {
         User user = userRepository.findUserByEmail(email);
-        UserDTO userDTO = userToUserDtoConverter.convert(user);
-        return userDTO;
+        return userToUserDtoConverter.convert(user);
     }
 
     @Override
+    @Transactional
     public PageDTO<UserDTO> findAllPageable(Long id, Pageable pageable) {
         Page<User> pagedUsers = userRepository.findAllByIdNot(id, pageable);
-        PageDTO<UserDTO> pagedUserDto = pageToPageDtoUserConverter.convert(pagedUsers);
-        return pagedUserDto;
+        return pageToPageDtoUserConverter.convert(pagedUsers);
     }
 
     @Override
+    @Transactional
     public PageDTO<UserDTO> findAllWithSearch(Long id, String search, Pageable pageable) {
         search = String.format("%%%s%%", search).toLowerCase();
         Page<User> pagedUsers = userRepository.findAllWithSearch(id, search, pageable);
-        PageDTO<UserDTO> pagedUserDto = pageToPageDtoUserConverter.convert(pagedUsers);
-        return pagedUserDto;
+        return pageToPageDtoUserConverter.convert(pagedUsers);
     }
 
     @Override
+    @Transactional
     public void createUser(UserDTO userDTO) {
         User user = userDtoToUserConverter.convert(userDTO);
+        user.setRoles(new ArrayList<>());
 
-        if(user.getRoles() == null) {
-            user.setRoles(new ArrayList<>());
-        }
         Role role = roleRepository.getRoleByName(ROLE_USER);
         user.getRoles().add(role);
 
@@ -99,15 +95,36 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateUser(UserDTO user) {
         int gender = Gender.getGenderByName(user.getSex());
-        userRepository.updateUserSettings(user.getFirstName(), user.getLastName(), user.getDob(), gender, user.getPhone(),
+        userRepository.updateUserSettings(user.getFirstName(), user.getLastName(), user.getDob(), gender,
+                user.getPhone(),
                 user.getId());
     }
 
     @Override
+    @Transactional
     public void updateUserImage(UserDTO userDTO, String fileName) {
         User user = getUser(userDTO.getId());
         user.setImage(fileName);
         userRepository.save(user);
         userDTO.setImage(fileName);
+    }
+
+    @Override
+    @Transactional
+    public void makeUserAdmin(Long userId) {
+        User user = getUser(userId);
+        checkSuperAdmin(user);
+        Role role = roleRepository.getRoleByName(ROLE_ADMIN);
+        user.getRoles().add(role);
+        userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void blockUser(Long userId) {
+        User user = getUser(userId);
+        checkSuperAdmin(user);
+        user.setRoles(new ArrayList<>());
+        userRepository.save(user);
     }
 }

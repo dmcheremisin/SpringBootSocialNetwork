@@ -5,6 +5,7 @@ import info.cheremisin.social.network.dto.UserDTO;
 import info.cheremisin.social.network.service.FriendsService;
 import info.cheremisin.social.network.service.MessagesService;
 import info.cheremisin.social.network.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,17 +22,12 @@ import static info.cheremisin.social.network.utils.ServerUtils.getUserFromSessio
 
 @Controller
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class ProfileController {
 
-    private UserService userService;
-    private FriendsService friendsService;
-    private MessagesService messagesService;
-
-    public ProfileController(UserService userService, FriendsService friendsService, MessagesService messagesService) {
-        this.userService = userService;
-        this.friendsService = friendsService;
-        this.messagesService = messagesService;
-    }
+    private final UserService userService;
+    private final FriendsService friendsService;
+    private final MessagesService messagesService;
 
     @GetMapping("/profile")
     public String getProfilePage(Model model, HttpServletRequest request) {
