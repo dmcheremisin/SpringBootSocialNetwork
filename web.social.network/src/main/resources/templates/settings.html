@@ -65,11 +65,11 @@
                             </div>
                             <div class="list-group-item"><span th:text="#{gender}">Gender</span>:
                                 <label class="radio-inline">
-                                    <input type="radio" name="sex" value="Male" th:checked="${user.sex.equals('Male')}">
+                                    <input type="radio" name="sex" value="Male" th:checked="${user.sex.equals('MALE')}">
                                     <span th:text="#{gender.male}">Male</span>
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="sex"  value="Female" th:checked="${user.sex.equals('Female')}">
+                                    <input type="radio" name="sex"  value="Female" th:checked="${user.sex.equals('FEMALE')}">
                                     <span th:text="#{gender.female}">Female</span>
                                 </label>
                             </div>

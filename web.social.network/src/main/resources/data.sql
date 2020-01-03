@@ -9,7 +9,7 @@ VALUES
 (2, 'cersei@lannister.ru',   '$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K', 'Cersei',   'Lannister', '1978-09-28', 2, '+7 888 999 99 99', '2.png'),
 (3, 'jaime@lannister.ru',    '$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K', 'Jaime',    'Lannister', '1975-09-28', 1, '+7 777 999 99 99', '3.jpeg'),
 (4, 'stark@north.no',        '$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K', 'Ned',      'Stark',     '1965-11-15', 1, '+7 666 999 99 99', '4.jpg'),
-(5, 'astark@north.no',       '$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K', 'Sansa',    'Stark',     '1992-04-26', 2, '+7 555 999 99 99', '5.jpg'),
+(5, 'sansa.stark@north.no',       '$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K', 'Sansa',    'Stark',     '1992-04-26', 2, '+7 555 999 99 99', '5.jpg'),
 (6, 'aria.stark@north.no',   '$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K', 'Aria',     'Stark',     '1996-12-15', 2, '+7 555 999 99 99', '6.jpg'),
 (7, 'john@north.no',         '$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K', 'Jon',      'Snow',      '1988-10-11', 1, '+7 444 999 99 99', '7.jpg'),
 (8, 'dayneris@targarien.ta', '$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K', 'Daenerys', 'Targaryen', '1981-03-17', 2, '+7 333 999 99 99', '8.jpg'),

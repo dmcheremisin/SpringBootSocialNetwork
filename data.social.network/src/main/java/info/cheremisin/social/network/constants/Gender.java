@@ -1,39 +1,41 @@
 package info.cheremisin.social.network.constants;
 
 public enum Gender {
-    Male(1), Female(2), Unknown(3);
+    MALE(1),
+    FEMALE(2),
+    UNKNOWN(3);
 
-    private int gender;
+    private final int gender;
 
     Gender(int sex) {
-        this.gender = sex;
+        gender = sex;
     }
 
     public static Gender getGenderById(Integer id) {
-        if(id == null) {
-            return Unknown;
-        }
+        if (id == null)
+            return UNKNOWN;
+
         switch (id) {
             case 1:
-                return Male;
+                return MALE;
             case 2:
-                return Female;
+                return FEMALE;
             default:
-                return Unknown;
+                return UNKNOWN;
         }
     }
 
     public static int getGenderByName(String name) {
-        if(name == null) {
-            return Unknown.gender;
-        }
+        if (name == null)
+            return UNKNOWN.gender;
+
         switch (name) {
             case "Male":
-                return Male.gender;
+                return MALE.gender;
             case "Female":
-                return Female.gender;
+                return FEMALE.gender;
             default:
-                return Unknown.gender;
+                return UNKNOWN.gender;
         }
     }
 }

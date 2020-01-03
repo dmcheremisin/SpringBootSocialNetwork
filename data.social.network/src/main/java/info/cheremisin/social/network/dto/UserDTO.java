@@ -53,6 +53,7 @@ public class UserDTO {
     private String sex;
     private String phone;
     private Boolean blocked;
+    private Boolean isAdmin;
     private String image;
 
     @Override

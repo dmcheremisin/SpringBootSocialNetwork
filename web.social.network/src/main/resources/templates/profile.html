@@ -61,8 +61,8 @@
                                     </p>
                                     <p class="list-group-item">
                                         <span th:text="#{gender}">Gender</span>:
-                                        <span th:if="${user.sex.equals('Male')}" th:text="#{gender.male}">Male</span>
-                                        <span th:if="${user.sex.equals('Female')}" th:text="#{gender.female}">Female</span>
+                                        <span th:if="${user.sex.equals('MALE')}" th:text="#{gender.male}">Male</span>
+                                        <span th:if="${user.sex.equals('FEMALE')}" th:text="#{gender.female}">Female</span>
                                     </p>
                                     <p class="list-group-item">
                                         <span th:text="#{phone}">Phone</span>:
@@ -72,7 +72,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr th:if="${user.isAdmin}">
                         <td></td>
                         <td>
                             <div class="panel panel-default">
