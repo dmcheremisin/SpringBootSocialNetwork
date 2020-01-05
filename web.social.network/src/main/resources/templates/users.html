@@ -32,7 +32,9 @@
                     <tr th:each="user : ${page.content}">
                         <td>
                             <a th:replace="template.html :: profileImage(${user})"></a>
-                            <br/><span th:text="${#temporals.format(user.dob, 'dd.MM.yyyy') + ', ' + user.sex}">23.05.1986, Female</span>
+                            <br/><span th:text="${#temporals.format(user.dob, 'dd.MM.yyyy') + ', '}">23.05.1986, </span>
+                            <span th:if="${user.sex.equals('MALE')}" th:text="#{gender.male}">Male</span>
+                            <span th:if="${user.sex.equals('FEMALE')}" th:text="#{gender.female}">Female</span>
                         </td>
                         <td>
                             <a th:href="@{'/user/conversation/' + ${user.id}}" href="#" class="btn btn-info" th:text="#{message}">Message</a>
