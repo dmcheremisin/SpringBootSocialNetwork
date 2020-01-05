@@ -34,6 +34,20 @@ Tyrion Lannister credentials:
 This application is tested in Docker.  
 I made 2 containers: mysql and social-network, and then linked them.  
 Commands for images creation and container start may be found in the directory: [docker](https://github.com/dmcheremisin/SpringBootSocialNetwork/tree/master/docker)
+
+## Screenshots
+![1](https://raw.githubusercontent.com/dmcheremisin/SpringBootSocialNetwork/master/screenshots/1.png)
+![2](https://raw.githubusercontent.com/dmcheremisin/SpringBootSocialNetwork/master/screenshots/2.png)
+![3](https://raw.githubusercontent.com/dmcheremisin/SpringBootSocialNetwork/master/screenshots/3.png)
+![4](https://raw.githubusercontent.com/dmcheremisin/SpringBootSocialNetwork/master/screenshots/4.png)
+![5](https://raw.githubusercontent.com/dmcheremisin/SpringBootSocialNetwork/master/screenshots/5.png)
+![6](https://raw.githubusercontent.com/dmcheremisin/SpringBootSocialNetwork/master/screenshots/6.png)
+![7](https://raw.githubusercontent.com/dmcheremisin/SpringBootSocialNetwork/master/screenshots/7.png)
+![8](https://raw.githubusercontent.com/dmcheremisin/SpringBootSocialNetwork/master/screenshots/8.png)
+![9](https://raw.githubusercontent.com/dmcheremisin/SpringBootSocialNetwork/master/screenshots/9.png)
+![10](https://raw.githubusercontent.com/dmcheremisin/SpringBootSocialNetwork/master/screenshots/10.png)
+![11](https://raw.githubusercontent.com/dmcheremisin/SpringBootSocialNetwork/master/screenshots/11.png)
+![12](https://raw.githubusercontent.com/dmcheremisin/SpringBootSocialNetwork/master/screenshots/12.png)
  
 ### Todo: 
 - improve test coverage
