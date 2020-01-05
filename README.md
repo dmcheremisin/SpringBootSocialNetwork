@@ -3,6 +3,10 @@
 - Circle CI build status:
 [![CircleCI](https://circleci.com/gh/dmcheremisin/SpringBootSocialNetwork.svg?style=svg&circle-token=54d82edd98892db8d4e69740d9bee65e48242495)](https://circleci.com/gh/dmcheremisin/SpringBootSocialNetwork)
 
+## Introduction
+This project is a continuation of the previous one. The previous project was made with pure Servlets and JSP
+ technologies [details here](https://github.com/dmcheremisin/SocialNetwork). I used the same
+  template layout and created a new project using SpringBoot.
 
 ## Functionality
 ### Base
@@ -31,10 +35,11 @@
 - Java 11
 - Spring: SpringBoot, MVC, Data JPA, Security, DevTools, Actuator
 - Maven
+- H2, Mysql, ClearDb(Heroku)
 - Thymeleaf
 - Javascript, jQuery
+- Html, CSS, Bootstrap
 - Test: JUnit, Mockito
-- H2, Mysql, ClearDb(Heroku)
 
 ### Environment
 - Heroku as CD tool
@@ -93,4 +98,4 @@ Commands for images creation and containers startup may be found in the director
 ![12](https://raw.githubusercontent.com/dmcheremisin/SpringBootSocialNetwork/master/screenshots/12.png)
  
 ### Todo: 
-- improve test coverage
+- Improve test coverage. Yes, I know it is very important, but I don't have enough time.
