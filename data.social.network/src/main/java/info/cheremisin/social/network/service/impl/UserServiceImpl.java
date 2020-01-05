@@ -8,6 +8,8 @@ import info.cheremisin.social.network.dto.PageDTO;
 import info.cheremisin.social.network.dto.UserDTO;
 import info.cheremisin.social.network.entities.Role;
 import info.cheremisin.social.network.entities.User;
+import info.cheremisin.social.network.exceptions.SocialNetworkException;
+import info.cheremisin.social.network.exceptions.UserNotFoundException;
 import info.cheremisin.social.network.repositories.RoleRepository;
 import info.cheremisin.social.network.repositories.UserRepository;
 import info.cheremisin.social.network.service.UserService;
@@ -35,12 +37,16 @@ public class UserServiceImpl implements UserService {
     private final PageToPageDtoUserConverter pageToPageDtoUserConverter;
 
     private static void checkSuperAdmin(User user) {
-        if(user.getId() == 1)
-            throw new RuntimeException("For the user with id = 1 it is not allowed to change roles");
+        if (user.getId() == 1)
+            throw new SocialNetworkException("It is not allowed to change roles for the user with id = 1");
     }
 
-    private User getUser(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id = " + id));
+    @Override
+    @Transactional(readOnly = true)
+    public User getUser(Long id) {
+        return userRepository.findById(id)
+                             .orElseThrow(() ->
+                                     new UserNotFoundException(String.format("User with id = %s is not found", id)));
     }
 
     @Override
@@ -96,8 +102,7 @@ public class UserServiceImpl implements UserService {
     public void updateUser(UserDTO user) {
         int gender = Gender.getGenderByName(user.getSex());
         userRepository.updateUserSettings(user.getFirstName(), user.getLastName(), user.getDob(), gender,
-                user.getPhone(),
-                user.getId());
+                user.getPhone(), user.getId());
     }
 
     @Override

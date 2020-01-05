@@ -2,9 +2,12 @@ package info.cheremisin.social.network.service;
 
 import info.cheremisin.social.network.dto.PageDTO;
 import info.cheremisin.social.network.dto.UserDTO;
+import info.cheremisin.social.network.entities.User;
 import org.springframework.data.domain.Pageable;
 
 public interface UserService {
+
+    User getUser(Long id);
 
     UserDTO getUserById(Long id);
 

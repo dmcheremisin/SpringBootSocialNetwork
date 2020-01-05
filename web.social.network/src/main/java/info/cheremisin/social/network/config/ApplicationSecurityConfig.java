@@ -1,6 +1,7 @@
 package info.cheremisin.social.network.config;
 
 import info.cheremisin.social.network.service.impl.UserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -12,20 +13,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// add a reference to our security data source
-	private UserDetailsServiceImpl userDetailsService;
-    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-	public ApplicationSecurityConfig(UserDetailsServiceImpl userDetailsService,
-									 CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
-									 BCryptPasswordEncoder bCryptPasswordEncoder) {
-		this.userDetailsService = userDetailsService;
-		this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
-		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-	}
+	private final UserDetailsServiceImpl userDetailsService;
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

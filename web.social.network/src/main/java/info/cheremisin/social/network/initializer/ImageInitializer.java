@@ -1,6 +1,7 @@
 package info.cheremisin.social.network.initializer;
 
 import info.cheremisin.social.network.service.ImageService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
@@ -18,16 +19,13 @@ import java.nio.file.Path;
  * Created by Dmitrii on 06.10.2019.
  */
 @Component
+@RequiredArgsConstructor
 public class ImageInitializer implements ApplicationListener<ContextRefreshedEvent> {
-    private ImageService imageService;
+
+    private final ImageService imageService;
 
     @Value("classpath:profileImages/*")
     private Resource[] resources;
-
-    @Autowired
-    public void setImageService(ImageService imageService) {
-        this.imageService = imageService;
-    }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {

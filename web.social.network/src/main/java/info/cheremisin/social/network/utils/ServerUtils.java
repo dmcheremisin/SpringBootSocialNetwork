@@ -15,7 +15,6 @@ public class ServerUtils {
     }
 
     public static Path getProfileImagesPath() {
-        Path pathImages = Paths.get(".").resolve(PROFILE_IMAGES);
-        return pathImages;
+        return Paths.get(".").resolve(PROFILE_IMAGES);
     }
 }

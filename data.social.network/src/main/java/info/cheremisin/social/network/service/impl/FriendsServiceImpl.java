@@ -6,8 +6,8 @@ import info.cheremisin.social.network.dto.UserDTO;
 import info.cheremisin.social.network.entities.Friendship;
 import info.cheremisin.social.network.entities.User;
 import info.cheremisin.social.network.repositories.FriendshipRepository;
-import info.cheremisin.social.network.repositories.UserRepository;
 import info.cheremisin.social.network.service.FriendsService;
+import info.cheremisin.social.network.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +27,7 @@ public class FriendsServiceImpl implements FriendsService {
     private final FriendshipRepository friendshipRepository;
     private final UserToUserDtoConverter userToUserDtoConverter;
     private final UserDtoToUserConverter userDtoToUserConverter;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     @Transactional(readOnly = true)
@@ -80,8 +80,7 @@ public class FriendsServiceImpl implements FriendsService {
     @Transactional
     public void deleteFriendship(UserDTO userDTO, Long friendId) {
         User user = userDtoToUserConverter.convert(userDTO);
-        User friend = userRepository.findById(friendId)
-                .orElseThrow(() -> new RuntimeException("User not found with id = " + friendId));
+        User friend = userService.getUser(friendId);
         friendshipRepository.deleteFriendRequests(user, friend);
     }
 
@@ -89,8 +88,7 @@ public class FriendsServiceImpl implements FriendsService {
     @Transactional
     public void acceptFriendship(UserDTO userDTO, Long friendId) {
         User user = userDtoToUserConverter.convert(userDTO);
-        User friend = userRepository.findById(friendId)
-                .orElseThrow(() -> new RuntimeException("User not found with id = " + friendId));
+        User friend = userService.getUser(friendId);
         friendshipRepository.deleteFriendRequests(user, friend);
         friendshipRepository.addFriendship(user, friend);
     }
@@ -99,8 +97,7 @@ public class FriendsServiceImpl implements FriendsService {
     @Transactional
     public void addToFriends(UserDTO userDTO, Long friendId) {
         User user = userDtoToUserConverter.convert(userDTO);
-        User friend = userRepository.findById(friendId)
-                .orElseThrow(() -> new RuntimeException("User not found with id = " + friendId));
+        User friend = userService.getUser(friendId);
         friendshipRepository.addToFriends(user, friend);
     }
 

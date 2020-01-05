@@ -2,6 +2,7 @@ package info.cheremisin.social.network.config;
 
 import info.cheremisin.social.network.dto.UserDTO;
 import info.cheremisin.social.network.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -14,9 +15,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    private UserService userService;
+    private final UserService userService;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
@@ -28,8 +30,4 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		response.sendRedirect(request.getContextPath() + "/user/profile");
 	}
 
-	@Autowired
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
 }

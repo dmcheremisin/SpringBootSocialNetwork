@@ -2,6 +2,7 @@ package info.cheremisin.social.network.controllers;
 
 import info.cheremisin.social.network.dto.PasswordChangeDTO;
 import info.cheremisin.social.network.dto.UserDTO;
+import info.cheremisin.social.network.exceptions.SocialNetworkException;
 import info.cheremisin.social.network.service.ImageService;
 import info.cheremisin.social.network.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -76,7 +77,7 @@ public class SettingsController {
         MultipartFile multipartFile = request.getFile("imagefile");
         String contentType = multipartFile.getContentType();
         if(!allowedExtensions.contains(contentType)) {
-            throw new RuntimeException("File extension is not supported");
+            throw new SocialNetworkException("File extension is not supported");
         }
 
         UserDTO user = getUserFromSession(request);
