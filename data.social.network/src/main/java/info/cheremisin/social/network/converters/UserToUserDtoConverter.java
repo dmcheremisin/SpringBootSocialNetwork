@@ -25,7 +25,6 @@ public class UserToUserDtoConverter implements Converter<User, UserDTO> {
                       .lastName(user.getLastName())
                       .phone(user.getPhone())
                       .sex(Gender.getGenderById(user.getSex()).name())
-                      .blocked(user.getBlocked() == null ? false : user.getBlocked())
                       .isAdmin(user.getRoles().stream().anyMatch(r -> r.getName().equals(ROLE_ADMIN)))
                       .image(user.getImage())
                       .dob(user.getDob())

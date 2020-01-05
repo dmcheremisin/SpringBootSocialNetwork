@@ -15,21 +15,20 @@ import static info.cheremisin.social.network.constants.Constants.PROFILE_IMAGES;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    private String getNewFileName(UserDTO user, MultipartFile multipartFile) {
+    private static String getNewFileName(UserDTO user, MultipartFile multipartFile) {
         String fileName = multipartFile.getOriginalFilename();
         String extension = getFileExtension(fileName);
-        String newFileName = user.getId() + "." + extension;
-        return newFileName;
+        return user.getId() + "." + extension;
     }
 
-    public Path getProfileImagesPath() {
-        Path pathImages = Paths.get(".").resolve(PROFILE_IMAGES);
-        return pathImages;
-    }
-
-    private String getFileExtension(String fileName) {
+    private static String getFileExtension(String fileName) {
         int index = fileName.lastIndexOf('.');
         return index == -1 ? fileName : fileName.substring(index + 1);
+    }
+
+    @Override
+    public Path getProfileImagesPath() {
+        return Paths.get(".").resolve(PROFILE_IMAGES);
     }
 
     @Override

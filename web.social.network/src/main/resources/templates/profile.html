@@ -80,7 +80,7 @@
                                     <h3 class="panel-title" th:text="#{profile.admin.menu}">Admin menu</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <div class="message-left">
+                                    <div class="message-left" th:if="${!user.isAdmin}">
                                         <form th:action="@{/admin/makeAdmin}" action="/admin/makeAdmin" method="POST">
                                             <input type="hidden" name="userId" th:value="${user.id}">
                                             <button class="btn btn-success" name="submit"

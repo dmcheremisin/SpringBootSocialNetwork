@@ -24,7 +24,6 @@ public class UserDtoToUserConverter implements Converter<UserDTO, User> {
                                        .lastName(userDTO.getLastName())
                                        .phone(userDTO.getPhone())
                                        .sex(Gender.getGenderByName(userDTO.getSex()))
-                                       .blocked(userDTO.getBlocked())
                                        .image(userDTO.getImage())
                                        .dob(userDTO.getDob());
 

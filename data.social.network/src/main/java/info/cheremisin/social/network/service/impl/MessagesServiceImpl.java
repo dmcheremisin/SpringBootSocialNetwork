@@ -7,25 +7,22 @@ import info.cheremisin.social.network.entities.Message;
 import info.cheremisin.social.network.entities.User;
 import info.cheremisin.social.network.repositories.MessageRepository;
 import info.cheremisin.social.network.service.MessagesService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class MessagesServiceImpl implements MessagesService {
 
-    private MessageRepository messageRepository;
-    private MessageToMessageDtoConverter messageToMessageDtoConverter;
-    private MessageDtoToMessageConverter messageDtoToMessageConverter;
+    private final MessageRepository messageRepository;
+    private final MessageToMessageDtoConverter messageToMessageDtoConverter;
+    private final MessageDtoToMessageConverter messageDtoToMessageConverter;
 
-    public MessagesServiceImpl(MessageRepository messageRepository,
-                               MessageToMessageDtoConverter messageToMessageDtoConverter,
-                               MessageDtoToMessageConverter messageDtoToMessageConverter) {
-        this.messageRepository = messageRepository;
-        this.messageToMessageDtoConverter = messageToMessageDtoConverter;
-        this.messageDtoToMessageConverter = messageDtoToMessageConverter;
-    }
-
+    @Override
+    @Transactional(readOnly = true)
     public Collection<MessageDTO> findAllRecentMessages(Long id) {
         Iterable<Message> all = messageRepository.findAllRecentMessages(id);
         Map<User, MessageDTO> map = new HashMap<>();
@@ -38,6 +35,7 @@ public class MessagesServiceImpl implements MessagesService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<MessageDTO> findConversation(Long userId, Long companionId) {
         List<Message> all = messageRepository.findConversation(userId, companionId);
         List<MessageDTO> messages = new LinkedList<>();
@@ -46,6 +44,7 @@ public class MessagesServiceImpl implements MessagesService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MessageDTO getRecentMessage(Long id) {
         Message message = messageRepository.findFirstBySenderIdOrReceiverIdOrderByIdDesc(id, id);
         MessageDTO messageDTO = messageToMessageDtoConverter.convert(message, id);
@@ -53,6 +52,7 @@ public class MessagesServiceImpl implements MessagesService {
     }
 
     @Override
+    @Transactional
     public void postMessage(MessageDTO messageDTO) {
         Message message = messageDtoToMessageConverter.convert(messageDTO);
         messageRepository.save(message);

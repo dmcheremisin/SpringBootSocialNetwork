@@ -8,10 +8,11 @@ import info.cheremisin.social.network.entities.User;
 import info.cheremisin.social.network.repositories.FriendshipRepository;
 import info.cheremisin.social.network.repositories.UserRepository;
 import info.cheremisin.social.network.service.FriendsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,46 +21,41 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class FriendsServiceImpl implements FriendsService {
-    private FriendshipRepository friendshipRepository;
-    private UserToUserDtoConverter userToUserDtoConverter;
-    private UserDtoToUserConverter userDtoToUserConverter;
-    private UserRepository userRepository;
 
-    public FriendsServiceImpl(FriendshipRepository friendshipRepository, UserToUserDtoConverter userToUserDtoConverter,
-                              UserDtoToUserConverter userDtoToUserConverter, UserRepository userRepository) {
-        this.friendshipRepository = friendshipRepository;
-        this.userToUserDtoConverter = userToUserDtoConverter;
-        this.userDtoToUserConverter = userDtoToUserConverter;
-        this.userRepository = userRepository;
-    }
+    private final FriendshipRepository friendshipRepository;
+    private final UserToUserDtoConverter userToUserDtoConverter;
+    private final UserDtoToUserConverter userDtoToUserConverter;
+    private final UserRepository userRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public Map<String, Set<UserDTO>> getFriends(Long userId, String search) {
         List<Friendship> requests = friendshipRepository.findAllByUserSenderIdOrUserReceiverId(userId, userId);
         Map<Boolean, List<Friendship>> requestMap = requests.stream()
                 .collect(Collectors.partitioningBy(Friendship::getAccepted));
 
         Predicate<User> userPredicate = u -> StringUtils.isEmpty(search) ||
-                (u.getFirstName() + " " + u.getLastName()).toLowerCase().contains(search.toLowerCase());
+                (u.getFirstName() + ' ' + u.getLastName()).toLowerCase().contains(search.toLowerCase());
         Set<UserDTO> usersNotAcceptedRequests = requestMap.get(false).stream()
                 .filter(r -> r.getUserSender().getId().equals(userId))
                 .map(Friendship::getUserReceiver)
                 .filter(userPredicate)
-                .map(u -> userToUserDtoConverter.convert(u))
+                .map(userToUserDtoConverter::convert)
                 .collect(Collectors.toSet());
 
         Set<UserDTO> notAcceptedRequestsToUser = requestMap.get(false).stream()
                 .filter(r -> r.getUserReceiver().getId().equals(userId))
                 .map(Friendship::getUserSender)
                 .filter(userPredicate)
-                .map(u -> userToUserDtoConverter.convert(u))
+                .map(userToUserDtoConverter::convert)
                 .collect(Collectors.toSet());
 
         Set<UserDTO> friendsOfUser = requestMap.get(true).stream()
                 .map(r -> r.getUserSender().getId().equals(userId) ? r.getUserReceiver() : r.getUserSender())
                 .filter(userPredicate)
-                .map(u -> userToUserDtoConverter.convert(u))
+                .map(userToUserDtoConverter::convert)
                 .collect(Collectors.toSet());
 
         Map<String, Set<UserDTO>> map = new HashMap<>();
@@ -70,13 +66,14 @@ public class FriendsServiceImpl implements FriendsService {
         return map;
     }
 
+    @Override
+    @Transactional(readOnly = true)
     public Set<UserDTO> getAcceptedFriendshipUsers(Long id) {
         List<Friendship> friends = friendshipRepository.findAcceptedFriendshipUsers(id);
-        Set<UserDTO> set = friends.stream()
-                .map(r -> r.getUserSender().getId().equals(id) ? r.getUserReceiver() : r.getUserSender())
-                .map(u -> userToUserDtoConverter.convert(u))
-                .collect(Collectors.toSet());
-        return set;
+        return friends.stream()
+                      .map(r -> r.getUserSender().getId().equals(id) ? r.getUserReceiver() : r.getUserSender())
+                      .map(userToUserDtoConverter::convert)
+                      .collect(Collectors.toSet());
     }
 
     @Override
@@ -108,7 +105,7 @@ public class FriendsServiceImpl implements FriendsService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Boolean checkFriendship(UserDTO userDTO, UserDTO friendDTO) {
         User user = userDtoToUserConverter.convert(userDTO);
         User friend = userDtoToUserConverter.convert(friendDTO);

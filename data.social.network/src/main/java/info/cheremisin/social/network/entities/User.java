@@ -42,9 +42,6 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "blocked")
-    private Boolean blocked;
-
     @Column(name = "image")
     private String image;
 

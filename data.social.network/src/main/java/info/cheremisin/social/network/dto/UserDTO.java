@@ -19,7 +19,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldMatch.List({
-        @FieldMatch(first = "password", second = "passwordConfirmation", message = "The password fields must match")
+        @FieldMatch(first = "password", second = "passwordConfirmation", message = "Password fields must match")
 })
 public class UserDTO {
 
@@ -52,7 +52,6 @@ public class UserDTO {
 
     private String sex;
     private String phone;
-    private Boolean blocked;
     private Boolean isAdmin;
     private String image;
 

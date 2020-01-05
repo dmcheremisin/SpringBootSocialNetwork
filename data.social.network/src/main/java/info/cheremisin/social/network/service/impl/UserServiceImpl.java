@@ -44,28 +44,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDTO getUserById(Long id) {
         User user = getUser(id);
         return userToUserDtoConverter.convert(user);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDTO getUserByEmail(String email) {
         User user = userRepository.findUserByEmail(email);
         return userToUserDtoConverter.convert(user);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public PageDTO<UserDTO> findAllPageable(Long id, Pageable pageable) {
         Page<User> pagedUsers = userRepository.findAllByIdNot(id, pageable);
         return pageToPageDtoUserConverter.convert(pagedUsers);
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public PageDTO<UserDTO> findAllWithSearch(Long id, String search, Pageable pageable) {
         search = String.format("%%%s%%", search).toLowerCase();
         Page<User> pagedUsers = userRepository.findAllWithSearch(id, search, pageable);
