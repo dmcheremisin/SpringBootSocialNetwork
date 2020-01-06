@@ -18,7 +18,7 @@
 
     <groupId>info.cheremisin</groupId>
     <artifactId>social-network</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>social-network</name>
     <description>Social Network using Spring Boot</description>
 
