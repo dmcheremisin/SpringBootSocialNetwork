@@ -5,7 +5,7 @@
 
 ## Introduction
 This project is a continuation of the previous one. The previous project was made with pure Servlets and JSP
- technologies [details here](https://github.com/dmcheremisin/SocialNetwork). I used the same
+ technologies [details here](https://github.com/Prophet1999/SpringBootSocialNetwork.git). I used the same
   template layout and created a new project using SpringBoot.
 
 ## Functionality
@@ -65,7 +65,7 @@ Tyrion Lannister credentials:
  - Maven 
  
  ### Steps:
- 1. git clone https://github.com/dmcheremisin/SpringBootSocialNetwork.git
+ 1. git clone [https://github.com/dmcheremisin/SpringBootSocialNetwork.git](https://github.com/Prophet1999/SpringBootSocialNetwork.git)
  2. mvn clean package -DskipTests=true
  3. cd web.social.network/target
  4. java -jar -Dspring.profiles.active=dev social-network.jar
