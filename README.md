@@ -5,7 +5,7 @@
 
 ## Introduction
 This project is a continuation of the previous one. The previous project was made with pure Servlets and JSP
- technologies [details here](https://github.com/dmcheremisin/SocialNetwork). I used the same
+ technologies [details here](https://github.com/Prophet1999/SpringBootSocialNetwork.git). I used the same
   template layout and created a new project using SpringBoot.
 
 ## Functionality
