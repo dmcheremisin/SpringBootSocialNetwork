@@ -65,7 +65,7 @@ Tyrion Lannister credentials:
  - Maven 
  
  ### Steps:
- 1. git clone https://github.com/dmcheremisin/SpringBootSocialNetwork.git
+ 1. git clone [https://github.com/dmcheremisin/SpringBootSocialNetwork.git](https://github.com/Prophet1999/SpringBootSocialNetwork.git)
  2. mvn clean package -DskipTests=true
  3. cd web.social.network/target
  4. java -jar -Dspring.profiles.active=dev social-network.jar
